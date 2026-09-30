@@ -7,7 +7,7 @@ import { renderDocument, type Rendered } from './markdown'
 // list only adds the ordering, grouping and card copy the docs index needs.
 // Resolved from the working directory because the build bundles this module
 // under dist/, where a URL relative to import.meta.url no longer points home.
-const GUIDE_DIR = path.resolve(process.cwd(), '..', 'docs', 'guide')
+const GUIDE_DIR = path.resolve(process.cwd(), 'docs', 'guide')
 
 export type GuideMeta = {
   slug: string

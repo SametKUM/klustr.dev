@@ -5,8 +5,7 @@ import { defineConfig } from 'astro/config'
 import sitemap from '@astrojs/sitemap'
 import tailwindcss from '@tailwindcss/vite'
 
-const SITE_DIR = path.dirname(fileURLToPath(import.meta.url))
-const REPO_DIR = path.resolve(SITE_DIR, '..')
+const REPO_DIR = path.dirname(fileURLToPath(import.meta.url))
 
 // Last commit that touched any of the repository-relative paths, as an ISO
 // timestamp, or undefined when git cannot answer.
@@ -27,13 +26,13 @@ function lastCommit(...paths) {
 // changed guide or comparison row moves its page, and the landing page moves
 // with its data files. The changelog is rebuilt from the Releases API, so it
 // carries the build time.
-const SHARED = ['site/src/layouts', 'site/src/components', 'site/src/styles']
+const SHARED = ['src/layouts', 'src/components', 'src/styles']
 const PAGE_SOURCES = {
-  '/': ['site/src/pages/index.astro', 'site/src/data', ...SHARED],
-  '/install/': ['site/src/pages/install.astro', 'site/src/data/install.ts'],
-  '/faq/': ['site/src/pages/faq.astro', 'site/src/data/faq.ts'],
-  '/compare/': ['site/src/pages/compare/index.astro', 'site/src/data/compare.ts'],
-  '/docs/': ['site/src/pages/docs/index.astro', 'site/src/lib/guides.ts', 'docs/guide'],
+  '/': ['src/pages/index.astro', 'src/data', ...SHARED],
+  '/install/': ['src/pages/install.astro', 'src/data/install.ts'],
+  '/faq/': ['src/pages/faq.astro', 'src/data/faq.ts'],
+  '/compare/': ['src/pages/compare/index.astro', 'src/data/compare.ts'],
+  '/docs/': ['src/pages/docs/index.astro', 'src/lib/guides.ts', 'docs/guide'],
 }
 
 function lastmodFor(pathname) {
@@ -41,7 +40,7 @@ function lastmodFor(pathname) {
   const docs = pathname.match(/^\/docs\/([^/]+)\/$/)
   if (docs) return lastCommit(`docs/guide/${docs[1]}.md`)
   if (/^\/compare\/[^/]+\/$/.test(pathname)) {
-    return lastCommit('site/src/data/compare.ts', 'site/src/pages/compare/[slug].astro')
+    return lastCommit('src/data/compare.ts', 'src/pages/compare/[slug].astro')
   }
   const sources = PAGE_SOURCES[pathname]
   return sources ? lastCommit(...sources) : undefined

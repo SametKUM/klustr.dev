@@ -1,16 +1,12 @@
 # syntax=docker/dockerfile:1
 
-# The build context is the repository root (see compose.yaml): the site renders
-# the user guides from docs/guide, which sits beside site/ in the checkout, so
-# the layout inside the image mirrors it and the guide loader needs no override.
 FROM node:26-alpine AS build
-WORKDIR /repo/site
+WORKDIR /site
 
-COPY site/package.json site/package-lock.json ./
+COPY package.json package-lock.json ./
 RUN --mount=type=cache,target=/root/.npm npm ci
 
-COPY docs/guide/ /repo/docs/guide/
-COPY site/ ./
+COPY . ./
 
 # The changelog page and the version label come from the GitHub Releases API.
 # A token lifts the anonymous rate limit; without one the build still succeeds
@@ -19,7 +15,7 @@ RUN --mount=type=secret,id=github_token \
     GITHUB_TOKEN="$(cat /run/secrets/github_token 2>/dev/null || true)" npm run build
 
 FROM joseluisq/static-web-server:2.44.0-alpine AS serve
-COPY --from=build /repo/site/dist/ /public/
+COPY --from=build /site/dist/ /public/
 
 ENV SERVER_PORT=8080 \
     SERVER_ROOT=/public \

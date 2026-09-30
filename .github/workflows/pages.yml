@@ -3,9 +3,6 @@ name: Deploy site to Pages
 on:
   push:
     branches: [main]
-    paths:
-      - "site/**"
-      - ".github/workflows/pages.yml"
   workflow_dispatch:
 
 permissions:
@@ -31,23 +28,19 @@ jobs:
         with:
           node-version: "26"
           cache: npm
-          cache-dependency-path: site/package-lock.json
       - run: npm ci
-        working-directory: site
       # vite build does not typecheck, so without this a deploy can ship code
       # that tsc rejects.
       - run: npm run typecheck
-        working-directory: site
       # The changelog page and the version label are rendered from the GitHub
       # Releases API at build time; the workflow token lifts the anonymous
       # rate limit so a busy runner IP cannot leave the page empty.
       - run: npm run build
-        working-directory: site
         env:
           GITHUB_TOKEN: ${{ github.token }}
       - uses: actions/upload-pages-artifact@v5
         with:
-          path: site/dist
+          path: dist
 
   deploy:
     needs: build

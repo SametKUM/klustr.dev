@@ -1,0 +1,9 @@
+# Everything is excluded first and only what the build reads is let back in.
+*
+!docs/guide
+!public
+!src
+!astro.config.mjs
+!package.json
+!package-lock.json
+!tsconfig.json
