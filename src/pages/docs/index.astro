@@ -2,7 +2,7 @@
 import DocsLayout from '../../layouts/DocsLayout.astro'
 import { GUIDE_GROUPS, assertGuidesIndexed, loadGuide } from '../../lib/guides'
 import { breadcrumbLd, graph } from '../../lib/seo'
-import { REPO_URL } from '../../lib/site'
+import { SITE_REPO_URL } from '../../lib/site'
 
 await assertGuidesIndexed()
 
@@ -20,7 +20,7 @@ const description =
 <DocsLayout
   title="Documentation"
   eyebrow="docs"
-  lede="These guides cover how to use Klustr day to day. They are rendered from the markdown in the repository, so the GitHub copy and this site never drift apart."
+  lede="These guides cover how to use Klustr day to day. They are rendered from the markdown in the site repository, so the GitHub copy and this site never drift apart."
   description={description}
   path="/docs/"
   ogType="website"
@@ -43,7 +43,7 @@ const description =
       ))
     }
     <p class="text-sm text-ink-3">
-      Found a mistake? The guides live under <code class="inline-code">docs/guide</code> in the <a href={REPO_URL} class="text-accent" target="_blank" rel="noreferrer">repository</a>; a pull request fixes both copies at once.
+      Found a mistake? The guides live under <code class="inline-code">docs/guide</code> in the <a href={SITE_REPO_URL} class="text-accent" target="_blank" rel="noreferrer">site repository</a>; a pull request fixes both copies at once.
     </p>
   </div>
 </DocsLayout>

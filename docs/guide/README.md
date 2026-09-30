@@ -1,8 +1,9 @@
 # Klustr user guide
 
 These guides cover how to *use* Klustr day to day. For the README's feature
-overview and install instructions, start at the [project README](../../README.md);
-for architecture and contributor conventions, see [`AGENTS.md`](../../AGENTS.md).
+overview and install instructions, start at the [project README](https://github.com/SametKUM/klustr#readme);
+for architecture and contributor conventions, see [`AGENTS.md`](https://github.com/SametKUM/klustr/blob/main/AGENTS.md).
+The same guides are published at [klustr.dev/docs](https://klustr.dev/docs/).
 
 This is a growing set — the guides below are written; more feature areas will be
 added over time.
@@ -38,6 +39,6 @@ added over time.
 
 ## Reporting problems
 
-- Bugs: open an issue via the [bug report template](../../.github/ISSUE_TEMPLATE/bug_report.yml).
-- Security issues: see the [security policy](../../SECURITY.md) — report privately,
+- Bugs: open an issue via the [bug report template](https://github.com/SametKUM/klustr/issues/new?template=bug_report.yml).
+- Security issues: see the [security policy](https://github.com/SametKUM/klustr/blob/main/SECURITY.md) — report privately,
   never in a public issue.

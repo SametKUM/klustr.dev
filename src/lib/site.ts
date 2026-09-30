@@ -12,10 +12,12 @@ export const SITE = {
     'Klustr is a free, open-source Kubernetes desktop client for macOS and Linux. Built in Go, it reads your kubeconfig and drives the API directly: live resources, RBAC review, Helm, Argo CD, Flux, Gateway API and cert-manager, with nothing installed in the cluster.',
   author: 'Samet Kum',
   repo: 'SametKUM/klustr',
+  siteRepo: 'SametKUM/klustr.dev',
   license: 'MIT',
 } as const
 
 export const REPO_URL = `https://github.com/${SITE.repo}`
+export const SITE_REPO_URL = `https://github.com/${SITE.siteRepo}`
 export const RELEASES_URL = `${REPO_URL}/releases`
 export const LATEST_RELEASE_URL = `${REPO_URL}/releases/latest`
 export const ISSUES_URL = `${REPO_URL}/issues`
