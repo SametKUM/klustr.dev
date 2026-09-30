@@ -13,7 +13,7 @@ export const SITE = {
   author: 'Samet Kum',
   repo: 'SametKUM/klustr',
   siteRepo: 'SametKUM/klustr.dev',
-  license: 'MIT',
+  license: 'Apache-2.0',
 } as const
 
 export const REPO_URL = `https://github.com/${SITE.repo}`

@@ -40,7 +40,7 @@ export const TOOLS: Record<ToolId, Tool> = {
     name: 'Klustr',
     url: 'https://klustr.dev/',
     summary:
-      'Free, MIT-licensed desktop client for macOS and Linux. Reads your kubeconfig, installs nothing in the cluster, and treats Helm, Argo CD, Flux, Gateway API and cert-manager as first-class.',
+      'Free, Apache-2.0 licensed desktop client for macOS and Linux. Reads your kubeconfig, installs nothing in the cluster, and treats Helm, Argo CD, Flux, Gateway API and cert-manager as first-class.',
   },
   lens: {
     id: 'lens',
@@ -77,7 +77,7 @@ export const ROWS: Row[] = [
     group: 'project',
     label: 'License and price',
     cells: {
-      klustr: { text: 'MIT, free', tone: 'yes' },
+      klustr: { text: 'Apache-2.0, free', tone: 'yes' },
       lens: { text: 'Proprietary', tone: 'mid', sub: 'Free Personal plan with eligibility limits, paid plans beyond' },
       k9s: { text: 'Apache-2.0, free', tone: 'yes' },
       headlamp: { text: 'Apache-2.0, free', tone: 'yes' },
@@ -250,12 +250,12 @@ export const COMPARE_PAGES: ComparePage[] = [
     description:
       'Klustr compared with Lens Desktop, for OpenLens and Freelens users too: license and sign-in, Electron vs native webview, multi-cluster, Helm, Argo CD, Flux, Gateway API and RBAC.',
     intro: [
-      'Lens is the best-known Kubernetes desktop IDE: a mature, cross-platform Electron app with an extension marketplace, team features and paid plans. Klustr is a smaller, MIT-licensed desktop client for macOS and Linux that trades the marketplace and the team layer for a direct workflow with no account: your kubeconfig, the Kubernetes API, and typed views for the platform tooling most clusters already run.',
+      'Lens is the best-known Kubernetes desktop IDE: a mature, cross-platform Electron app with an extension marketplace, team features and paid plans. Klustr is a smaller, Apache-2.0 licensed desktop client for macOS and Linux that trades the marketplace and the team layer for a direct workflow with no account: your kubeconfig, the Kubernetes API, and typed views for the platform tooling most clusters already run.',
       'If you arrived here looking for an OpenLens alternative or a Freelens alternative: OpenLens was the community build of Lens’s open-source core and has not been maintained for over two years, and Freelens is the community fork started in 2024 that carries it on. Both keep Lens’s Electron architecture and one-cluster-per-view model, so most rows below apply to them as well. Freelens, like Klustr, needs no account.',
       `Facts about Lens come from its public documentation and were reviewed on ${REVIEWED_ON}. If something is out of date, [open an issue](https://github.com/SametKUM/klustr/issues) and it will be corrected.`,
     ],
     different: [
-      '**No sign-in.** Lens Desktop needs a Lens ID to activate, and the free Personal plan is limited to education and to companies under a revenue threshold. Klustr has no account, no activation and no plan tiers. It is MIT-licensed and free for any use.',
+      '**No sign-in.** Lens Desktop needs a Lens ID to activate, and the free Personal plan is limited to education and to companies under a revenue threshold. Klustr has no account, no activation and no plan tiers. It is Apache-2.0 licensed and free for any use.',
       '**Nothing installed in the cluster.** Both tools read your kubeconfig. Klustr never asks to deploy anything either; the single opt-in exception is a one-click metrics-server install that Klustr can also remove.',
       '**Several clusters in one table.** Lens shows one cluster per view. Klustr drives two or more contexts as one virtual cluster with a Context column, named groups and color tags, so a fleet or a prod-versus-staging comparison is one screen.',
       '**GitOps and platform tooling without CLIs or extensions.** Argo CD, Flux, Gateway API, cert-manager, Istio, Karpenter and KEDA get typed views out of the box, driven through the Kubernetes API. In Lens these areas are covered by extensions.',

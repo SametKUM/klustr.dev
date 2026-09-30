@@ -23,7 +23,7 @@ export const FAQ: Faq[] = [
     id: 'free',
     question: 'Is Klustr free? Is there a paid tier?',
     answer:
-      'Klustr is free software under the MIT license. There is no account, no activation and no paid tier, and the full source is on [GitHub](https://github.com/SametKUM/klustr). Every release is built by CI from a tagged commit.',
+      'Klustr is free software under the Apache License 2.0. There is no account, no activation and no paid tier, and the full source is on [GitHub](https://github.com/SametKUM/klustr). Every release is built by CI from a tagged commit.',
   },
   {
     id: 'telemetry',
@@ -83,7 +83,7 @@ export const FAQ: Faq[] = [
     id: 'vs-lens',
     question: 'How is Klustr different from Lens?',
     answer:
-      'Klustr is MIT-licensed, needs no account and installs nothing in the cluster, renders through the operating system’s webview instead of Electron, can show several clusters in one table, and ships typed views for Helm, Argo CD, Flux, Gateway API and cert-manager without extensions. Lens has Windows builds, an extension marketplace and team features. The [full comparison](/compare/lens/) goes row by row.',
+      'Klustr is Apache-2.0 licensed, needs no account and installs nothing in the cluster, renders through the operating system’s webview instead of Electron, can show several clusters in one table, and ships typed views for Helm, Argo CD, Flux, Gateway API and cert-manager without extensions. Lens has Windows builds, an extension marketplace and team features. The [full comparison](/compare/lens/) goes row by row.',
   },
   {
     id: 'bugs',

@@ -28,7 +28,7 @@ const COMPARISONS = COMPARE_PAGES.map((page) =>
 
 const OPTIONAL = [
   link('Changelog', '/changelog/', 'Release notes, rendered from the GitHub Releases API.'),
-  `- [Source repository](${REPO_URL}): Go backend, React frontend, MIT licensed.`,
+  `- [Source repository](${REPO_URL}): Go backend, React frontend, Apache-2.0 licensed.`,
 ]
 
 const DOCS = await Promise.all(
