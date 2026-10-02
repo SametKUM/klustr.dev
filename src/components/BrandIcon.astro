@@ -1,9 +1,9 @@
 ---
-import { Hammer } from '@lucide/astro'
+import { AppWindow, Hammer } from '@lucide/astro'
 import { siApple, siArchlinux, siLinux, siUbuntu } from 'simple-icons'
 
 interface Props {
-  brand: 'apple' | 'archlinux' | 'ubuntu' | 'linux' | 'source'
+  brand: 'apple' | 'archlinux' | 'ubuntu' | 'linux' | 'windows' | 'source'
   size?: string
   colored?: boolean
 }
@@ -17,7 +17,9 @@ const ICONS = {
   linux: { path: siLinux.path, hex: null },
 } as const
 
-const icon = brand === 'source' ? null : ICONS[brand]
+// simple-icons carries no Windows logo (Microsoft's brand rules), so Windows
+// gets a generic window glyph.
+const icon = brand === 'source' || brand === 'windows' ? null : ICONS[brand]
 const fill = icon && colored && icon.hex ? `#${icon.hex}` : 'currentColor'
 ---
 
@@ -26,6 +28,8 @@ const fill = icon && colored && icon.hex ? `#${icon.hex}` : 'currentColor'
     <svg viewBox="0 0 24 24" width={size} height={size} fill={fill} aria-hidden="true">
       <path d={icon.path} />
     </svg>
+  ) : brand === 'windows' ? (
+    <AppWindow size={size} />
   ) : (
     <Hammer size={size} />
   )

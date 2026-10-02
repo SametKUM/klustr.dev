@@ -1,13 +1,14 @@
 import { SITE } from '../lib/site'
 
 export type InstallTab = {
-  id: 'mac' | 'arch' | 'deb' | 'build'
+  id: 'mac' | 'arch' | 'deb' | 'win' | 'build'
   label: string
-  brand: 'apple' | 'archlinux' | 'ubuntu' | 'source'
+  brand: 'apple' | 'archlinux' | 'ubuntu' | 'windows' | 'source'
   html: string
 }
 
 const P = '<span class="prompt">$ </span>'
+const PS = '<span class="prompt">PS&gt; </span>'
 const C = (text: string) => `<span class="comment">${text}</span>`
 
 // Each command block is HTML for a `pre.cmd`: a prompt span starts a copyable
@@ -35,6 +36,15 @@ ${P}brew install klustr`,
     | grep -oP '"tag_name":\\s*"\\K[^"]+')
 ${P}curl -LO https://github.com/${SITE.repo}/releases/download/$V/klustr_\${V#v}_amd64.deb
 ${P}sudo apt install ./klustr_\${V#v}_amd64.deb`,
+  },
+  {
+    id: 'win',
+    label: 'Windows',
+    brand: 'windows',
+    html: `${PS}$V = (Invoke-RestMethod https://api.github.com/repos/${SITE.repo}/releases/latest).tag_name
+${PS}Invoke-WebRequest "https://github.com/${SITE.repo}/releases/download/$V/klustr-$V-windows-amd64.zip" -OutFile klustr.zip
+${PS}Expand-Archive klustr.zip "$env:LOCALAPPDATA\\Programs\\Klustr" -Force
+${PS}&amp; "$env:LOCALAPPDATA\\Programs\\Klustr\\klustr.exe"`,
   },
   {
     id: 'build',

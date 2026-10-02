@@ -7,7 +7,7 @@ const link = (label: string, path: string, note: string) => `- [${label}](${abso
 
 const PAGES = [
   link('Home', '/', SITE.metaDescription),
-  link('Install', '/install/', 'Homebrew, the AUR package, the .deb, the tarballs and building from source.'),
+  link('Install', '/install/', 'Homebrew, the AUR package, the .deb, the tarballs, the Windows zip and building from source.'),
   link('FAQ', '/faq/', 'What Klustr installs, which platforms it runs on, how it authenticates and what it costs.'),
   link('Documentation index', '/docs/', 'All task-focused guides, grouped.'),
   link('Comparisons', '/compare/', 'Klustr next to Lens, k9s, Headlamp and Kubernetes Dashboard, row by row.'),

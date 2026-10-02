@@ -14,9 +14,10 @@ const { html, class: className = '' } = Astro.props
 <script>
   // Each command block is split into one row per command with its own copy
   // button. Sequenced installs (the .deb flow) must run one step at a time, so
-  // a single block-level copy would be misleading. A prompt line ("$ ") starts
-  // a command; an unprompted line continues it only when the previous line
-  // ends in a backslash, otherwise it is a free comment row with no button.
+  // a single block-level copy would be misleading. A prompt line ("$ " or
+  // "PS> ") starts a command; an unprompted line continues it only when the
+  // previous line ends in a backslash, otherwise it is a free comment row with
+  // no button.
   type Command = { lines: string[]; copyable: boolean }
 
   const COPY_SVG =
@@ -83,7 +84,7 @@ const { html, class: className = '' } = Astro.props
         const runnable = code.cloneNode(true) as HTMLElement
         runnable.querySelectorAll('.comment').forEach((c) => c.remove())
         const text = (runnable.textContent ?? '')
-          .replace(/^\$\s/, '')
+          .replace(/^(?:\$|PS>)\s/, '')
           .replace(/[ \t]+$/gm, '')
           .trim()
         row.appendChild(makeCopyButton(text))

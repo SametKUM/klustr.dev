@@ -67,7 +67,7 @@ const { group, version, detectOs = false, class: className = '' } = Astro.props
   function detectTab(): string {
     const ua = navigator.userAgent
     if (/Macintosh|Mac OS X/.test(ua)) return 'mac'
-    if (/Windows/.test(ua)) return 'build'
+    if (/Windows/.test(ua)) return 'win'
     if (/Linux|X11|CrOS/.test(ua)) return 'deb'
     return 'mac'
   }
