@@ -40,7 +40,7 @@ export const TOOLS: Record<ToolId, Tool> = {
     name: 'Klustr',
     url: 'https://klustr.dev/',
     summary:
-      'Free, Apache-2.0 licensed desktop client for macOS and Linux. Reads your kubeconfig, installs nothing in the cluster, and treats Helm, Argo CD, Flux, Gateway API and cert-manager as first-class.',
+      'Free, Apache-2.0 licensed desktop client for macOS, Linux and Windows. Reads your kubeconfig, installs nothing in the cluster, and treats Helm, Argo CD, Flux, Gateway API and cert-manager as first-class.',
   },
   lens: {
     id: 'lens',
@@ -99,7 +99,7 @@ export const ROWS: Row[] = [
     group: 'project',
     label: 'Platforms',
     cells: {
-      klustr: { text: 'macOS, Linux', sub: 'Windows from source' },
+      klustr: { text: 'macOS, Linux, Windows', sub: 'Windows build not code-signed' },
       lens: { text: 'macOS, Windows, Linux' },
       k9s: { text: 'macOS, Linux, Windows' },
       headlamp: { text: 'macOS, Windows, Linux, browser' },
@@ -250,7 +250,7 @@ export const COMPARE_PAGES: ComparePage[] = [
     description:
       'Klustr compared with Lens Desktop, for OpenLens and Freelens users too: license and sign-in, Electron vs native webview, multi-cluster, Helm, Argo CD, Flux, Gateway API and RBAC.',
     intro: [
-      'Lens is the best-known Kubernetes desktop IDE: a mature, cross-platform Electron app with an extension marketplace, team features and paid plans. Klustr is a smaller, Apache-2.0 licensed desktop client for macOS and Linux that trades the marketplace and the team layer for a direct workflow with no account: your kubeconfig, the Kubernetes API, and typed views for the platform tooling most clusters already run.',
+      'Lens is the best-known Kubernetes desktop IDE: a mature, cross-platform Electron app with an extension marketplace, team features and paid plans. Klustr is a smaller, Apache-2.0 licensed desktop client for macOS, Linux and Windows that trades the marketplace and the team layer for a direct workflow with no account: your kubeconfig, the Kubernetes API, and typed views for the platform tooling most clusters already run.',
       'If you arrived here looking for an OpenLens alternative or a Freelens alternative: OpenLens was the community build of Lens’s open-source core and has not been maintained for over two years, and Freelens is the community fork started in 2024 that carries it on. Both keep Lens’s Electron architecture and one-cluster-per-view model, so most rows below apply to them as well. Freelens, like Klustr, needs no account.',
       `Facts about Lens come from its public documentation and were reviewed on ${REVIEWED_ON}. If something is out of date, [open an issue](https://github.com/SametKUM/klustr/issues) and it will be corrected.`,
     ],
@@ -263,13 +263,13 @@ export const COMPARE_PAGES: ComparePage[] = [
       '**Native webview instead of Electron.** Klustr is a Go binary that renders through the operating system’s webview via Wails, so there is no bundled Chromium. The macOS archive is about 22 MB.',
     ],
     stronger: [
-      '**Windows builds.** Lens ships Windows installers. Klustr builds from source on Windows until its release path is validated.',
+      '**Windows installer.** Lens ships Windows installers. Klustr ships a portable zip that is not code-signed yet.',
       '**Extension marketplace.** Lens has a large extension ecosystem. Klustr has no plugin system; its integrations are built in.',
       '**Team and cloud features.** Lens offers shared catalogs, cloud-connected clusters and enterprise SSO. Klustr is a single-user desktop client.',
       '**Metrics dashboards.** Lens can install and read a Prometheus stack. Klustr reads metrics-server for CPU and memory and does not chart Prometheus.',
     ],
     verdict:
-      'Pick Lens if you need Windows builds, an extension marketplace or team features. Pick Klustr if you want a free, open-source client with no account that treats Helm, GitOps and Gateway API as first-class and can show several clusters at once.',
+      'Pick Lens if you need a Windows installer, an extension marketplace or team features. Pick Klustr if you want a free, open-source client with no account that treats Helm, GitOps and Gateway API as first-class and can show several clusters at once.',
   },
   {
     slug: 'k9s',
@@ -293,7 +293,7 @@ export const COMPARE_PAGES: ComparePage[] = [
       '**Keyboard speed.** For an operator who knows the shortcuts, nothing beats k9s for moving through a single cluster.',
       '**Works over SSH.** k9s runs anywhere a terminal does, including a bastion host. Klustr is a desktop app.',
       '**Plugins and hotkeys.** k9s is scriptable: custom commands, plugins and skins with a small config file.',
-      '**Windows and footprint.** k9s ships Windows builds and is a single small binary.',
+      '**Footprint.** k9s is a single small binary.',
     ],
     verdict:
       'Keep k9s for fast single-cluster navigation and remote sessions. Add Klustr when you need several clusters in one view, typed GitOps and Gateway API status, or a diff before you change something.',
@@ -320,7 +320,6 @@ export const COMPARE_PAGES: ComparePage[] = [
     stronger: [
       '**In-cluster mode for a team.** Deploy Headlamp once with OIDC and every teammate gets a browser UI without installing anything locally.',
       '**Plugin ecosystem and resource map.** Headlamp has a documented plugin API and a resource relationship map.',
-      '**Windows and browser.** Headlamp ships Windows builds and runs in a browser. Klustr builds from source on Windows.',
       '**CNCF governance.** Headlamp is a Kubernetes SIG UI project with community governance. Klustr is a single-maintainer open-source project.',
     ],
     verdict:
@@ -347,7 +346,7 @@ export const COMPARE_PAGES: ComparePage[] = [
     stronger: [
       '**Browser only.** Teammates reach the Dashboard with a URL and a token; nobody installs anything locally.',
       '**Part of the Kubernetes project.** The Dashboard is maintained under the Kubernetes organisation.',
-      '**Any operating system.** A browser is the only requirement. Klustr ships for macOS and Linux and builds from source on Windows.',
+      '**Any operating system.** A browser is the only requirement. Klustr ships for macOS, Linux and Windows.',
     ],
     verdict:
       'Keep the Dashboard if you need a browser UI for people who cannot install a desktop app. Use Klustr if you operate clusters from your own machine and want Helm, GitOps, Gateway API and several clusters in one window with nothing deployed.',

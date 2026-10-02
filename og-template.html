@@ -1,8 +1,9 @@
 <!doctype html>
 <!--
   Source template for public/og.png (1200×630 social card).
-  Regenerate after changing it, from the site/ directory:
-    bunx playwright screenshot --viewport-size=1200,630 og-template.html public/og.png
+  Regenerate after changing it, from the repository root (the wait lets the
+  Google Fonts load):
+    bunx playwright screenshot --viewport-size=1200,630 --wait-for-timeout=2000 og-template.html public/og.png
   Keep the headline and the feature line in sync with the landing hero.
 -->
 <html lang="en">
@@ -109,7 +110,7 @@
       </div>
 
       <div>
-        <p class="eyebrow">kubernetes desktop gui for macOS and Linux</p>
+        <p class="eyebrow">kubernetes desktop gui for macOS, Linux and Windows</p>
         <h1>Your Kubernetes clusters, live.<br /><span class="marker">Nothing installed in them.</span></h1>
         <p class="features">
           Live resources, <b>RBAC review</b>, <b>Helm</b>, <b>Argo CD</b>, <b>Flux</b>, <b>Gateway API</b> and

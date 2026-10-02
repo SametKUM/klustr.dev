@@ -48,7 +48,7 @@ export function softwareLd(opts: {
     alternateName: 'Klustr Kubernetes desktop client',
     applicationCategory: 'DeveloperApplication',
     applicationSubCategory: 'Kubernetes desktop client',
-    operatingSystem: 'macOS, Linux',
+    operatingSystem: 'macOS, Linux, Windows',
     description: SITE.description,
     url: `${SITE.url}/`,
     downloadUrl: LATEST_RELEASE_URL,

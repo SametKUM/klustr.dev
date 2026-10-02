@@ -17,7 +17,7 @@ export const FAQ: Faq[] = [
     id: 'platforms',
     question: 'Which platforms does Klustr run on?',
     answer:
-      'macOS on Apple Silicon, signed with a Developer ID certificate and notarized by Apple, so Gatekeeper opens it directly. Linux amd64 as a tarball, a `.deb` and the `klustr-bin` AUR package; the binary links against `webkit2gtk-4.1` and `gtk-3`, which Ubuntu 24.04+, Fedora 39+ and Arch ship by default (Ubuntu 22.04 needs `libwebkit2gtk-4.1-0 libgtk-3-0` first). Windows builds will be attached to releases once they have been validated; until then, build from source with `mise install` and `wails build`.',
+      'macOS on Apple Silicon, signed with a Developer ID certificate and notarized by Apple, so Gatekeeper opens it directly. Linux amd64 as a tarball, a `.deb` and the `klustr-bin` AUR package; the binary links against `webkit2gtk-4.1` and `gtk-3`, which Ubuntu 24.04+, Fedora 39+ and Arch ship by default (Ubuntu 22.04 needs `libwebkit2gtk-4.1-0 libgtk-3-0` first). Windows amd64 as a zip, tested on Windows 11, which ships the WebView2 runtime Klustr renders with; the build is not code-signed yet, so SmartScreen warns on first launch and Smart App Control, when on, blocks it.',
   },
   {
     id: 'free',
@@ -83,7 +83,7 @@ export const FAQ: Faq[] = [
     id: 'vs-lens',
     question: 'How is Klustr different from Lens?',
     answer:
-      'Klustr is Apache-2.0 licensed, needs no account and installs nothing in the cluster, renders through the operating system’s webview instead of Electron, can show several clusters in one table, and ships typed views for Helm, Argo CD, Flux, Gateway API and cert-manager without extensions. Lens has Windows builds, an extension marketplace and team features. The [full comparison](/compare/lens/) goes row by row.',
+      'Klustr is Apache-2.0 licensed, needs no account and installs nothing in the cluster, renders through the operating system’s webview instead of Electron, can show several clusters in one table, and ships typed views for Helm, Argo CD, Flux, Gateway API and cert-manager without extensions. Lens has a Windows installer, an extension marketplace and team features. The [full comparison](/compare/lens/) goes row by row.',
   },
   {
     id: 'bugs',

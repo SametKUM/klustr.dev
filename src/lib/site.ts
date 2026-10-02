@@ -2,14 +2,14 @@ export const SITE = {
   name: 'Klustr',
   url: 'https://klustr.dev',
   // The home page <title>; kept under 60 characters so search results show it whole.
-  title: 'Klustr: open-source Kubernetes desktop GUI for macOS & Linux',
+  title: 'Klustr: Kubernetes desktop GUI for macOS, Linux and Windows',
   // The home page meta description; kept under 160 characters for the same reason.
   metaDescription:
-    'Free, open-source Kubernetes desktop GUI for macOS and Linux. Live resources, Helm, Argo CD, Flux, Gateway API from your kubeconfig. Nothing in the cluster.',
+    'Free, open-source Kubernetes desktop GUI for macOS, Linux and Windows. Live resources, Helm, Argo CD, Flux, Gateway API. Nothing in the cluster.',
   tagline: 'A native Kubernetes desktop client that installs nothing in your cluster',
   // The long form, for structured data where length is not a constraint.
   description:
-    'Klustr is a free, open-source Kubernetes desktop client for macOS and Linux. Built in Go, it reads your kubeconfig and drives the API directly: live resources, RBAC review, Helm, Argo CD, Flux, Gateway API and cert-manager, with nothing installed in the cluster.',
+    'Klustr is a free, open-source Kubernetes desktop client for macOS, Linux and Windows. Built in Go, it reads your kubeconfig and drives the API directly: live resources, RBAC review, Helm, Argo CD, Flux, Gateway API and cert-manager, with nothing installed in the cluster.',
   author: 'Samet Kum',
   repo: 'SametKUM/klustr',
   siteRepo: 'SametKUM/klustr.dev',
