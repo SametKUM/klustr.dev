@@ -11,13 +11,17 @@ already pointed at the context you opened it for. Your installed CLIs (`kubectl`
 
 ## Opening and toggling
 
-- Press **`⌘\``** (macOS) / **`Ctrl+\``** (Linux) to toggle the drawer.
+- Press **`⌘\``** (macOS) / **`Ctrl+\``** (Linux and Windows) to toggle the
+  drawer.
 - Opening it with a single active context auto-creates the first tab for that
   context.
 - Drag the drawer's top edge to resize it; the height is remembered across
   restarts.
 
-Windows is not supported yet.
+On Windows a tab runs `SHELL` when it points at a program Windows can find (Git
+Bash, for example), otherwise PowerShell 7, then Windows PowerShell, then `cmd`.
+Running `wsl` in a tab keeps its `KUBECONFIG` and context: Klustr lists them in
+`WSLENV`, translating the kubeconfig path for Linux.
 
 ## Tabs and contexts
 
@@ -55,3 +59,12 @@ on `PATH` on Linux) with the context already selected.
 - Klustr remembers your **preferred app** and launches it directly next time.
 - **Alt/Option-click** the external-launch button to force the picker and change
   the default.
+
+On Windows there is no app list: Klustr opens PowerShell in a new console, which
+Windows shows in your default terminal app (Windows Terminal unless you picked
+another in Settings).
+
+Each external window gets its own single-context copy of the kubeconfig, deleted
+when the window closes. On Windows, closing the window with its close button
+after Klustr has quit leaves the copy behind; the first Klustr start a day or
+more later removes it.
