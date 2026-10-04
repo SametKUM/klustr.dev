@@ -71,7 +71,7 @@ export const FAQ: Faq[] = [
     id: 'crds',
     question: 'How are custom resources handled?',
     answer:
-      'CRDs are discovered on connect and grouped in the sidebar by API group. Opening a kind lazily starts a watch for it, and a CRD installed while you are connected appears without a restart. The detail view shows YAML, and edit, delete and scale work through the dynamic client. Argo CD, Flux, Gateway API, cert-manager, Istio and Karpenter get typed views instead of the generic browser, and KEDA triggers are mapped onto the HPAs they drive. See [custom resources](/docs/custom-resources/) and [platform integrations](/docs/integrations/).',
+      'CRDs are discovered on connect and grouped in the sidebar by API group. Opening a kind lazily starts a watch for it, and a CRD installed while you are connected appears without a restart. The detail view shows YAML, and edit, delete and scale work through the dynamic client. Argo CD, Flux, Tekton, Gateway API, cert-manager, Istio, Karpenter and Kyverno get typed views instead of the generic browser, and KEDA triggers are mapped onto the HPAs they drive. See [custom resources](/docs/custom-resources/) and [platform integrations](/docs/integrations/).',
   },
   {
     id: 'storage',
