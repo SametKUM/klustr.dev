@@ -70,9 +70,19 @@ export const GUIDE_GROUPS: { name: string; guides: GuideMeta[] }[] = [
         summary: 'Argo CD and Flux: sync, refresh, reconcile and suspend through the Kubernetes API.',
       },
       {
+        slug: 'tekton',
+        group: 'working with resources',
+        summary: 'PipelineRuns with their task table, TaskRun step logs, and cancel and rerun without tkn.',
+      },
+      {
         slug: 'gateway-api',
         group: 'working with resources',
         summary: 'Gateways, routes, ListenerSets and how to read route status when something is rejected.',
+      },
+      {
+        slug: 'kyverno',
+        group: 'working with resources',
+        summary: 'Kyverno policies and exceptions, policy reports, and which resources each policy flags.',
       },
       {
         slug: 'integrations',

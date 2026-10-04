@@ -25,7 +25,11 @@ Some CRDs get a first-class, typed UI instead of the generic YAML view when thei
 API is detected:
 
 - **Argo CD** and **Flux** — see [GitOps](gitops.md).
+- **Tekton** — PipelineRuns, TaskRuns, Pipelines and Tasks; see
+  [Tekton Pipelines](tekton.md).
 - **Gateway API** — see [Gateway API](gateway-api.md).
+- **Kyverno** — policies, PolicyExceptions and the `wgpolicyk8s.io` policy reports;
+  see [Kyverno & policy reports](kyverno.md).
 - **cert-manager** — Certificates, Issuers / ClusterIssuers and the full issuance
   chain (CertificateRequest → Order → Challenge), with ready/expiry status and a
   one-click **Renew**.
