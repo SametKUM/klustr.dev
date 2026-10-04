@@ -120,6 +120,19 @@ const features: Feature[] = [
     link: { href: '/docs/gitops/', label: 'GitOps guide' },
   },
   {
+    id: 'tekton',
+    eyebrow: 'tekton',
+    heading: 'Tekton: why a pipeline failed, in one table.',
+    body: 'PipelineRuns show the controller’s status, a task tally and a live duration. A run’s detail joins the resolved pipeline with its TaskRuns: the task that failed, the tasks its failure skipped and why, and the finally tasks that still ran. Step logs open on the failed step, and Cancel and Rerun work without tkn.',
+    chips: [
+      { value: 'Task table', label: 'pipeline, TaskRuns and skips joined' },
+      { value: 'Logs', label: 'open on the failed step' },
+      { value: 'Rerun', label: 'and cancel, no tkn' },
+    ],
+    shot: shotBySlug('tekton-pipelinerun'),
+    link: { href: '/docs/tekton/', label: 'Tekton guide' },
+  },
+  {
     id: 'gateway',
     eyebrow: 'gateway api',
     heading: 'Gateway API: route status you can read.',
@@ -144,6 +157,19 @@ const features: Feature[] = [
     ],
     shot: shotBySlug('certmanager-chain'),
     link: { href: '/docs/integrations/', label: 'Platform integrations' },
+  },
+  {
+    id: 'kyverno',
+    eyebrow: 'kyverno',
+    heading: 'Kyverno: policy findings on the resource they flag.',
+    body: 'ClusterPolicies, Policies, CEL ValidatingPolicies and PolicyExceptions with their rules, actions and what they match. Policy reports list a resource’s results worst first, each policy lists the resources it fails, and a Deployment or Pod with a report gets a Policy tab with the failing count on its label. Read-only, through the Kubernetes API.',
+    chips: [
+      { value: 'Policy tab', label: 'on the resource it flags' },
+      { value: 'Violations', label: 'per policy, across reports' },
+      { value: 'CEL', label: 'ValidatingPolicies too' },
+    ],
+    shot: shotBySlug('kyverno-policy-tab'),
+    link: { href: '/docs/kyverno/', label: 'Kyverno guide' },
   },
   {
     id: 'istio',
@@ -189,7 +215,7 @@ const features: Feature[] = [
 const stats = [
   { value: '62', label: 'resource kinds with YAML edit, delete and scale' },
   { value: '10', label: 'platform integrations with typed views' },
-  { value: '12', label: 'themes, six light and six dark' },
+  { value: '11', label: 'themes, five light and six dark' },
   { value: '0', label: 'components installed in the cluster' },
   { value: '22 MB', label: 'macOS download, signed and notarized' },
   { value: 'Apache', label: '2.0 license, no account, no tier' },
@@ -299,7 +325,7 @@ const compareRows = [
   <section id="features" class="scroll-mt-20 py-14">
     <div class="mx-auto max-w-6xl px-5">
       <div class="max-w-2xl">
-        <p class="eyebrow">ten workflows</p>
+        <p class="eyebrow">twelve workflows</p>
         <h2 class="display mt-3 text-3xl sm:text-4xl">The jobs kubectl makes you stitch together.</h2>
         <p class="lede mt-4">
           One Kubernetes GUI for the day-to-day work and for the platform tooling around it. Each integration below
