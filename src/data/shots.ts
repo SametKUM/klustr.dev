@@ -4,7 +4,7 @@ import connections from '../assets/screenshots/02-connections-default-dark.png'
 import podDiagnosis from '../assets/screenshots/03-pod-diagnosis-default-light.png'
 import logsStream from '../assets/screenshots/04-logs-stream-dracula-light.png'
 import debugContainer from '../assets/screenshots/05-debug-container-one-dark.png'
-import helmUpgrade from '../assets/screenshots/06-helm-upgrade-diff-tokyo-night-day.png'
+import helmUpgrade from '../assets/screenshots/06-helm-upgrade-diff-monokai-light.png'
 import argoApplications from '../assets/screenshots/07-argo-applications-one-light.png'
 import fluxKustomization from '../assets/screenshots/08-flux-kustomization-monokai.png'
 import gatewayHttpRoute from '../assets/screenshots/09-gateway-httproute-tokyo-night.png'
@@ -19,6 +19,8 @@ import clusterOverview from '../assets/screenshots/17-cluster-overview-nord.png'
 import istioVirtualService from '../assets/screenshots/18-istio-virtualservice-one-light.png'
 import karpenterNodeClaims from '../assets/screenshots/19-karpenter-nodeclaims-tokyo-night.png'
 import kedaHpa from '../assets/screenshots/20-keda-hpa-nord-light.png'
+import tektonPipelineRun from '../assets/screenshots/21-tekton-pipelinerun-dracula-light.png'
+import kyvernoPolicyTab from '../assets/screenshots/22-kyverno-policy-tab-monokai.png'
 
 export type Shot = {
   id: string
@@ -30,8 +32,8 @@ export type Shot = {
 }
 
 // Every shot is captured from two kind clusters seeded with realistic
-// workloads and deliberate failures, at the app's default 1280×800 window,
-// each in a different theme so the tour doubles as a tour of the theme picker.
+// workloads and deliberate failures, at the app's default 1280×800 window. The
+// shots cycle through the themes, so the tour doubles as a tour of the picker.
 export const SHOTS: Shot[] = [
   {
     id: 'pods-aggregated',
@@ -82,7 +84,7 @@ export const SHOTS: Shot[] = [
     id: 'helm-upgrade',
     image: helmUpgrade,
     title: 'Helm upgrade with dry-run',
-    theme: 'Tokyo Night Day',
+    theme: 'Monokai Light',
     caption:
       'New values on the left, the manifest Helm would render on the right. Dry-run renders first; Upgrade applies only after you have read it. No helm binary is involved.',
     guide: { href: '/docs/helm/', label: 'Helm guide' },
@@ -171,10 +173,10 @@ export const SHOTS: Shot[] = [
   {
     id: 'theme-picker',
     image: themePicker,
-    title: 'Twelve themes',
+    title: 'Eleven themes',
     theme: 'Default Light',
     caption:
-      'Six light and six dark themes, switched from the header. Every screenshot in this tour uses a different one.',
+      'Six theme families, picked from the header, with a light and dark switch: five light themes and six dark ones, Tokyo Night being dark only. The screenshots in this tour cycle through them.',
     guide: { href: '/docs/getting-started/', label: 'Getting started' },
   },
   {
@@ -212,6 +214,24 @@ export const SHOTS: Shot[] = [
     caption:
       'A KEDA-managed autoscaler whose external metrics are mapped back to their ScaledObject triggers: a weekday 09:00 to 18:00 cron for three replicas and a CPU target, instead of opaque s0 and s1 rows.',
     guide: { href: '/docs/integrations/', label: 'Platform integrations' },
+  },
+  {
+    id: 'tekton-pipelinerun',
+    image: tektonPipelineRun,
+    title: 'Tekton PipelineRun',
+    theme: 'Dracula Light',
+    caption:
+      'A failed release run as one task table: clone succeeded, the tests failed, build, scan and deploy were skipped because the run was stopping, and the finally task still sent its notification.',
+    guide: { href: '/docs/tekton/', label: 'Tekton guide' },
+  },
+  {
+    id: 'kyverno-policy-tab',
+    image: kyvernoPolicyTab,
+    title: 'Kyverno Policy tab',
+    theme: 'Monokai',
+    caption:
+      'The payments-api Deployment with its own policy report: two failing Pod Security rules on top, the passing ones below, and the failing count on the tab label so it shows before the tab is opened.',
+    guide: { href: '/docs/kyverno/', label: 'Kyverno guide' },
   },
 ]
 

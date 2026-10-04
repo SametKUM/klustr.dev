@@ -591,7 +591,7 @@
      width of the container so the UI text stays readable. */
   .wf-tabs {
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(6, minmax(0, 1fr));
     border: 1px solid var(--rule-strong);
     border-radius: var(--radius-sheet);
     background: var(--paper-2);
@@ -613,10 +613,10 @@
       background-color 0.12s ease,
       box-shadow 0.12s ease;
   }
-  .wf-tab:nth-child(5n) {
+  .wf-tab:nth-child(6n) {
     border-right: 0;
   }
-  .wf-tab:nth-child(n + 6) {
+  .wf-tab:nth-child(n + 7) {
     border-top: 1px solid var(--rule);
   }
   .wf-tab::before {
