@@ -1,10 +1,11 @@
 <!doctype html>
 <!--
-  Source template for public/og.png (1200×630 social card).
-  Regenerate after changing it, from the repository root (the wait lets the
-  Google Fonts load):
-    bunx playwright screenshot --viewport-size=1200,630 --wait-for-timeout=2000 og-template.html public/og.png
-  Keep the headline and the feature line in sync with the landing hero.
+  Source template for public/og.png (1200×630 social card, rendered at 2× so
+  the app screenshot stays legible). Regenerate after changing it, from the
+  repository root (the wait lets the Google Fonts load):
+    bunx playwright screenshot --device="Desktop Chrome HiDPI" --viewport-size=1200,630 --wait-for-timeout=2000 og-template.html public/og.png
+  Keep the headline in sync with the landing hero and the chips in sync with
+  the integrations.
 -->
 <html lang="en">
   <head>
@@ -12,21 +13,24 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;700;800&display=swap"
       rel="stylesheet"
     />
     <style>
       :root {
-        --paper: oklch(0.968 0.007 85);
-        --paper-2: oklch(0.986 0.005 85);
-        --ink: oklch(0.21 0.025 264);
-        --ink-2: oklch(0.42 0.02 264);
-        --ink-3: oklch(0.57 0.015 264);
-        --rule: oklch(0.21 0.025 264 / 0.3);
-        --grid: oklch(0.6 0.09 240 / 0.16);
-        --grid-major: oklch(0.6 0.09 240 / 0.3);
-        --accent: oklch(0.47 0.17 256);
-        --marker: oklch(0.8 0.12 256 / 0.55);
+        --paper: oklch(0.175 0.024 268);
+        --paper-2: oklch(0.225 0.022 264);
+        --ink: oklch(0.955 0.008 256);
+        --ink-2: oklch(0.76 0.02 256);
+        --ink-3: oklch(0.62 0.02 256);
+        --rule: oklch(1 0 0 / 0.12);
+        --rule-strong: oklch(1 0 0 / 0.2);
+        --grid: oklch(0.72 0.1 240 / 0.07);
+        --grid-major: oklch(0.72 0.1 240 / 0.14);
+        --accent: oklch(0.72 0.16 256);
+        --violet: oklch(0.62 0.2 290);
+        --marker: oklch(0.72 0.16 256 / 0.38);
+        --ok: oklch(0.75 0.15 162);
         --sans: "Geist", ui-sans-serif, system-ui, sans-serif;
         --mono: "Geist Mono", ui-monospace, "SFMono-Regular", monospace;
       }
@@ -40,6 +44,13 @@
         overflow: hidden;
         -webkit-font-smoothing: antialiased;
       }
+      .glow {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(520px 420px at 900px 340px, oklch(0.62 0.2 290 / 0.32), transparent 70%),
+          radial-gradient(420px 320px at 120px 80px, oklch(0.72 0.16 256 / 0.12), transparent 70%);
+      }
       .grid {
         position: absolute;
         inset: 0;
@@ -50,25 +61,35 @@
           linear-gradient(90deg, var(--grid) 1px, transparent 1px);
         background-size: 160px 160px, 160px 160px, 32px 32px, 32px 32px;
         background-position: -1px -1px;
+        -webkit-mask-image: linear-gradient(90deg, #000 30%, transparent 75%);
+        mask-image: linear-gradient(90deg, #000 30%, transparent 75%);
       }
-      .frame {
-        position: relative;
-        height: 100%;
+      .topline {
+        position: absolute;
+        inset: 0 0 auto 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--accent), var(--violet));
+      }
+
+      .copy {
+        position: absolute;
+        inset: 0 auto 0 0;
+        width: 640px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        padding: 64px 72px;
+        padding: 52px 0 50px 60px;
       }
-      .brand { display: flex; align-items: center; gap: 16px; }
-      .brand img { width: 56px; height: 56px; border-radius: 12px; }
-      .brand span { font-family: var(--mono); font-size: 34px; font-weight: 700; letter-spacing: -0.02em; }
-      .eyebrow { font-family: var(--mono); font-size: 22px; color: var(--ink-3); margin-bottom: 18px; }
+      .brand { display: flex; align-items: center; gap: 14px; }
+      .brand img { width: 46px; height: 46px; border-radius: 11px; box-shadow: 0 0 0 1px var(--rule), 0 8px 24px oklch(0.62 0.2 290 / 0.35); }
+      .brand span { font-family: var(--mono); font-size: 30px; font-weight: 700; letter-spacing: -0.02em; }
+      .eyebrow { font-family: var(--mono); font-size: 15px; color: var(--ink-3); margin-bottom: 16px; }
       .eyebrow::before { content: "// "; color: var(--accent); }
       h1 {
         font-family: var(--mono);
-        font-size: 56px;
+        font-size: 50px;
         font-weight: 800;
-        line-height: 1.02;
+        line-height: 1.04;
         letter-spacing: -0.045em;
       }
       h1 .marker {
@@ -77,33 +98,65 @@
         -webkit-box-decoration-break: clone;
         box-decoration-break: clone;
       }
-      .features {
-        margin-top: 28px;
-        font-size: 24px;
-        line-height: 1.4;
-        color: var(--ink-2);
-        max-width: 980px;
+      .lede { margin-top: 20px; font-size: 20px; line-height: 1.4; color: var(--ink-2); }
+      .chips { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 8px; max-width: 530px; }
+      .chip {
+        font-size: 16px;
+        font-weight: 500;
+        color: var(--ink);
+        padding: 5px 12px;
+        border: 1px solid var(--rule-strong);
+        border-radius: 6px;
+        background: oklch(1 0 0 / 0.04);
       }
-      .features b { color: var(--ink); font-weight: 600; }
-      .footer { display: flex; align-items: center; justify-content: space-between; }
+      .footer { display: flex; align-items: center; gap: 22px; }
       .pill {
         display: inline-flex;
         align-items: center;
-        gap: 12px;
-        border: 1px solid var(--rule);
+        gap: 10px;
+        border: 1px solid var(--rule-strong);
         background: var(--paper-2);
         border-radius: 6px;
-        padding: 12px 20px;
+        padding: 8px 14px;
         font-family: var(--mono);
-        font-size: 20px;
+        font-size: 15px;
       }
-      .dot { width: 10px; height: 10px; border-radius: 9999px; background: oklch(0.52 0.14 160); }
-      .meta { font-family: var(--mono); font-size: 20px; color: var(--ink-3); }
+      .dot { width: 9px; height: 9px; border-radius: 9999px; background: var(--ok); box-shadow: 0 0 10px var(--ok); }
+      .meta { font-family: var(--mono); font-size: 15px; color: var(--ink-3); }
+
+      .window {
+        position: absolute;
+        left: 612px;
+        top: 96px;
+        width: 850px;
+        border-radius: 12px;
+        overflow: hidden;
+        background: #21222c;
+        border: 1px solid oklch(1 0 0 / 0.16);
+        box-shadow:
+          0 0 0 1px oklch(0 0 0 / 0.4),
+          0 30px 80px oklch(0 0 0 / 0.6),
+          0 0 120px oklch(0.62 0.2 290 / 0.25);
+      }
+      .titlebar { display: flex; align-items: center; gap: 8px; height: 30px; padding: 0 13px; background: #191a21; }
+      .titlebar i { width: 12px; height: 12px; border-radius: 9999px; }
+      .titlebar i:nth-child(1) { background: #ff5f57; }
+      .titlebar i:nth-child(2) { background: #febc2e; }
+      .titlebar i:nth-child(3) { background: #28c840; }
+      .window img { display: block; width: 100%; }
     </style>
   </head>
   <body>
+    <div class="glow"></div>
     <div class="grid"></div>
-    <div class="frame">
+    <div class="topline"></div>
+
+    <div class="window">
+      <div class="titlebar"><i></i><i></i><i></i></div>
+      <img src="src/assets/screenshots/01-pods-aggregated-dracula.png" alt="" />
+    </div>
+
+    <div class="copy">
       <div class="brand">
         <img src="public/appicon.png" alt="" />
         <span>Klustr</span>
@@ -111,11 +164,20 @@
 
       <div>
         <p class="eyebrow">kubernetes desktop gui for macOS, Linux and Windows</p>
-        <h1>Your Kubernetes clusters, live.<br /><span class="marker">Nothing installed in them.</span></h1>
-        <p class="features">
-          Live resources, <b>RBAC review</b>, <b>Helm</b>, <b>Argo CD</b>, <b>Flux</b>, <b>Gateway API</b> and
-          <b>cert-manager</b> from the kubeconfig you already have.
-        </p>
+        <h1>Your Kubernetes<br />clusters, live.<br /><span class="marker">Nothing installed<br />in them.</span></h1>
+        <p class="lede">Live, multi-cluster, RBAC-aware.</p>
+        <div class="chips">
+          <span class="chip">Helm</span>
+          <span class="chip">Argo CD</span>
+          <span class="chip">Flux</span>
+          <span class="chip">Tekton</span>
+          <span class="chip">Kyverno</span>
+          <span class="chip">Istio</span>
+          <span class="chip">Gateway API</span>
+          <span class="chip">cert-manager</span>
+          <span class="chip">Karpenter</span>
+          <span class="chip">KEDA</span>
+        </div>
       </div>
 
       <div class="footer">
