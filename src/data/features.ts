@@ -24,5 +24,5 @@ export const FEATURE_LIST = [
   'Port-forwarding with suggested ports and a header indicator',
   'Built-in terminal drawer bound to the active context',
   'Per-context read-only mode',
-  'Eleven themes and a command palette',
+  'Thirteen themes and a command palette',
 ]
