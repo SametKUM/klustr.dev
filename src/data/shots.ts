@@ -173,10 +173,10 @@ export const SHOTS: Shot[] = [
   {
     id: 'theme-picker',
     image: themePicker,
-    title: 'Eleven themes',
+    title: 'Thirteen themes',
     theme: 'Default Light',
     caption:
-      'Six theme families, picked from the header, with a light and dark switch: five light themes and six dark ones, Tokyo Night being dark only. The screenshots in this tour cycle through them.',
+      'Seven theme families, picked from the header, with a light and dark switch: six light themes and seven dark ones, Tokyo Night being dark only. The screenshots in this tour cycle through them.',
     guide: { href: '/docs/getting-started/', label: 'Getting started' },
   },
   {
