@@ -31,7 +31,11 @@ added over time.
 - [Helm](helm.md) — browsing releases and install / upgrade / rollback / uninstall.
 - [GitOps: Argo CD & Flux](gitops.md) — sync, refresh, reconcile and suspend
   without the vendor CLIs.
+- [Tekton Pipelines](tekton.md) — PipelineRuns and their task table, step logs,
+  cancel and rerun.
 - [Gateway API](gateway-api.md) — Gateways, routes, and reading route status.
+- [Kyverno & policy reports](kyverno.md) — policies, exceptions, reports, and the
+  violations behind them.
 - [Platform integrations](integrations.md) — cert-manager, Istio, Karpenter and
   KEDA.
 - [Custom Resources (CRDs)](custom-resources.md) — auto-discovery and the generic
