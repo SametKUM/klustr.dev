@@ -85,6 +85,11 @@ export const GUIDE_GROUPS: { name: string; guides: GuideMeta[] }[] = [
         summary: 'Kyverno policies and exceptions, policy reports, and which resources each policy flags.',
       },
       {
+        slug: 'cilium',
+        group: 'working with resources',
+        summary: 'Cilium network policies, endpoints, nodes, IP pools and BGP configuration as Cilium reports them.',
+      },
+      {
         slug: 'integrations',
         group: 'working with resources',
         summary: 'cert-manager, Istio, Karpenter and KEDA views that appear when their CRDs are present.',
