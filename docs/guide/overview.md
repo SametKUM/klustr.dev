@@ -13,7 +13,8 @@ Under **Cluster → Overview**. Three donuts plus a couple of counts:
   allocatable / capacity. Usage comes from `metrics.k8s.io`; requests and limits
   are summed from running pods.
 - **Pods** — running pods vs the allocatable / capacity the nodes advertise.
-- **Node count** and **namespace count**.
+- **Node count**, **pod count** and **namespace count**. The pod count includes
+  finished (Succeeded or Failed) pods, so it can be higher than the Pods donut.
 
 Usage numbers need a metrics server. If `metrics.k8s.io` isn't available, the
 capacity/requests/limits parts still render and the usage slice is replaced with
