@@ -25,7 +25,8 @@ Shown when the `applications.argoproj.io` CRD is present.
 Klustr covers the Flux toolkit kinds: Kustomization, HelmRelease, GitRepository,
 HelmRepository, OCIRepository, Bucket, Provider, Alert and Receiver.
 
-- Each shows its conditions, source, and applied revision.
+- Each shows its Ready state (**Ready**, **Not ready**, **Unknown**, or
+  **Suspended** while suspended), conditions, source, and applied revision.
 - **Reconcile** and **Suspend / Resume** buttons hit the standard Flux annotations —
   again, no `flux` CLI involved.
 

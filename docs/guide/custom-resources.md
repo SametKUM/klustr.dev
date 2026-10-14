@@ -14,7 +14,9 @@ again. A brand-new CRD installed while you're connected shows up without a resta
 ## Browsing and editing
 
 - The generic CR list shows the objects for that kind.
-- The detail dialog shows **YAML by default**.
+- The detail dialog shows **YAML by default**. A CR that one of the integrations
+  below covers opens on that integration's overview instead, even from the
+  generic list.
 - YAML edit, delete and (where applicable) scale work through the dynamic client,
   the same as built-in kinds — subject to a context's
   [read-only mode](getting-started.md#read-only-mode).
@@ -33,10 +35,13 @@ API is detected:
 - **cert-manager** — Certificates, Issuers / ClusterIssuers and the full issuance
   chain (CertificateRequest → Order → Challenge), with ready/expiry status and a
   one-click **Renew**.
-- **Istio** — VirtualServices, DestinationRules and PeerAuthentications, with the
-  served API version read from the discovered CRD.
+- **Istio** — VirtualServices, DestinationRules and PeerAuthentications.
 - **Karpenter** — NodePools and NodeClaims with provisioning status, surfaced when
   the `karpenter.sh` CRDs are present.
+
+Each integration reads its CRDs at the API version the cluster serves, so an older
+install, such as Karpenter before 1.0 or Flux before 2.3, works as well as a
+current one.
 
 Everything else stays under the generic CRD browser — which is enough for most
 operators most of the time.

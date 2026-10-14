@@ -4,7 +4,11 @@ Beyond [GitOps](gitops.md) and [Gateway API](gateway-api.md), Klustr promotes a
 few more CRD families from the generic [Custom Resources](custom-resources.md)
 browser to first-class, typed views. Each sidebar group appears only when its
 CRDs are detected in an active context, so nothing clutters a cluster that
-doesn't run it.
+doesn't run it. Each reads its CRDs at the API version the cluster serves, so it
+tracks whichever release the cluster runs.
+
+A **Ready** column reads the same in every integration: **Ready**, **Not ready**
+or **Unknown**, from the resource's Ready condition.
 
 All mutating actions below respect a context's
 [read-only mode](getting-started.md#read-only-mode).
@@ -29,8 +33,6 @@ Shown when the `networking.istio.io` CRDs are present.
 
 - **VirtualServices**, **DestinationRules** and **PeerAuthentications**,
   watch-backed.
-- The served API version is read from the discovered CRD rather than hardcoded,
-  so it tracks whatever Istio version the cluster runs.
 
 ## Karpenter
 
