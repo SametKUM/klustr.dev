@@ -12,6 +12,8 @@ stern-style view:
 
 - Multi-pod streaming with a distinct ANSI color per pod.
 - Follow mode, log-level highlighting, regex filtering.
+- On a pod, a **Tail** picker starts the stream from the last 200, 1,000 or
+  10,000 lines, or from the whole log.
 - Save the current buffer to a file.
 
 In aggregated mode the stream spans the pods across every active context.
@@ -81,7 +83,12 @@ DaemonSet and mirror pods, matching `kubectl drain` semantics.
 ## Events
 
 The **Events** tab on a resource shows the core `Events` filtered to that object, so
-you see exactly what the control plane has said about it.
+you see exactly what the control plane has said about it. It refreshes every 15
+seconds while open, and **Refresh** reloads it right away.
+
+Event messages can be selected and copied here, in the Events view and in the
+overview feeds; each message also has a copy button that shows on hover. The rest
+of a resource's detail tabs is selectable the same way.
 
 ## Pod diagnosis
 
