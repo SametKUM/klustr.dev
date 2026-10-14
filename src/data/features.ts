@@ -14,7 +14,7 @@ export const FEATURE_LIST = [
   'Gateway API typed views with listener tables, rule matrices and RouteParentStatus',
   'cert-manager certificates with the full issuance chain and one-click renew',
   'Kyverno policies, exceptions and policy reports, with the violations of each policy',
-  'Istio, Karpenter and KEDA views that appear when their CRDs are present',
+  'Istio, Karpenter, Cilium and KEDA views that appear when their CRDs are present',
   'Multi-pod log streaming with per-pod colors, follow, regex and save',
   'In-app exec, ephemeral debug containers and a root node shell',
   'Cordon, uncordon and PDB-aware drain with live progress',

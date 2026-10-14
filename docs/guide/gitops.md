@@ -30,5 +30,24 @@ HelmRepository, OCIRepository, Bucket, Provider, Alert and Receiver.
 - **Reconcile** and **Suspend / Resume** buttons hit the standard Flux annotations —
   again, no `flux` CLI involved.
 
+### Image automation
+
+When the `image.toolkit.fluxcd.io` CRDs are present, the Flux group also lists the
+image automation kinds:
+
+- **ImageRepositories** — the image, the registry provider, when it was last
+  scanned and how many tags it found, with the latest tags and the exclusion
+  patterns in the detail.
+- **ImagePolicies** — the repository a policy reads, its policy type (semver,
+  alphabetical or numerical) with the range or order, the tag filter, and the
+  image it selected: tag, digest and the previous pick.
+- **ImageUpdateAutomations** — the Git source, checkout and push branches, the
+  update path and strategy, and the last run, push and commit.
+
+References between them open the referenced object, across namespaces too. An
+ImagePolicy has no reconcile of its own: reconcile its ImageRepository to rescan
+tags, and the policy follows. Suspend needs the `v1` ImagePolicy API, the first
+that has the field.
+
 > All sync / reconcile / suspend actions respect a context's
 > [read-only mode](getting-started.md#read-only-mode).
