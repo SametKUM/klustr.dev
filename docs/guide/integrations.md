@@ -41,6 +41,10 @@ Shown when the `karpenter.sh` CRDs are present.
 - **NodePools** — weight, node class, consolidation policy, CPU / memory limits
   and current usage, node count and ready state.
 - **NodeClaims** — provisioning status for the nodes Karpenter is bringing up.
+- **EC2NodeClasses** — shown when the AWS provider's `karpenter.k8s.aws` CRDs are
+  present: readiness, AMI family, IAM role and instance profile, and the subnets,
+  security groups and AMIs the selector terms resolved to, each AMI with its
+  requirements. A NodePool's or NodeClaim's node class opens its EC2NodeClass.
 
 ## KEDA
 

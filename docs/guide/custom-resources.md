@@ -37,7 +37,9 @@ API is detected:
   one-click **Renew**.
 - **Istio** — VirtualServices, DestinationRules and PeerAuthentications.
 - **Karpenter** — NodePools and NodeClaims with provisioning status, surfaced when
-  the `karpenter.sh` CRDs are present.
+  the `karpenter.sh` CRDs are present, and the AWS provider's EC2NodeClasses.
+- **Cilium** — network policies, endpoints, nodes, identities, IP pools and BGP
+  configuration; see [Cilium](cilium.md).
 
 Each integration reads its CRDs at the API version the cluster serves, so an older
 install, such as Karpenter before 1.0 or Flux before 2.3, works as well as a
