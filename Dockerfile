@@ -14,7 +14,7 @@ COPY . ./
 RUN --mount=type=secret,id=github_token \
     GITHUB_TOKEN="$(cat /run/secrets/github_token 2>/dev/null || true)" npm run build
 
-FROM joseluisq/static-web-server:2.44.0-alpine AS serve
+FROM joseluisq/static-web-server:2.44.1-alpine AS serve
 COPY --from=build /site/dist/ /public/
 
 ENV SERVER_PORT=8080 \
