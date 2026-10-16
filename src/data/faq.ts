@@ -4,6 +4,13 @@ export type Faq = {
   answer: string
 }
 
+export const FAQ_PAGE = {
+  title: 'Frequently asked questions',
+  description:
+    'Answers about Klustr: what it installs in the cluster (nothing), supported platforms, license, telemetry, authentication with exec plugins and aws-vault, multi-cluster mode, read-only mode, RBAC-scoped lists and custom resources.',
+  lede: 'Short answers with links to the guide that goes deeper. If your question is missing, open an issue and it will be added here.',
+}
+
 // Answers are markdown. The FAQ page renders them and also emits FAQPage
 // structured data from the plain-text form, so keep each answer self-contained.
 export const FAQ: Faq[] = [

@@ -1,6 +1,6 @@
 ---
 import DocsLayout from '../../layouts/DocsLayout.astro'
-import { GUIDE_GROUPS, assertGuidesIndexed, loadGuide } from '../../lib/guides'
+import { DOCS_PAGE, GUIDE_GROUPS, assertGuidesIndexed, loadGuide } from '../../lib/guides'
 import { breadcrumbLd, graph } from '../../lib/seo'
 import { SITE_REPO_URL } from '../../lib/site'
 
@@ -13,15 +13,13 @@ const groups = await Promise.all(
   })),
 )
 
-const description =
-  'Task-focused guides for Klustr: connecting to contexts, multi-cluster aggregated mode, credential helpers, debugging workloads, Helm, Argo CD, Flux and Tekton, Gateway API, cert-manager, Kyverno and custom resources.'
 ---
 
 <DocsLayout
-  title="Documentation"
+  title={DOCS_PAGE.title}
   eyebrow="docs"
-  lede="These guides cover how to use Klustr day to day. They are rendered from the markdown in the site repository, so the GitHub copy and this site never drift apart."
-  description={description}
+  lede={DOCS_PAGE.lede}
+  description={DOCS_PAGE.description}
   path="/docs/"
   ogType="website"
   jsonLd={graph([breadcrumbLd([{ name: 'Home', path: '/' }, { name: 'Docs', path: '/docs/' }])])}
