@@ -105,6 +105,23 @@ export function renderFragment(markdown: string): string {
   return createMarked([]).parse(markdown, { async: false })
 }
 
+// A line of UI copy outside .prose, where nothing styles a bare <code> or <a>:
+// code spans and links carry the utility classes the page markup uses.
+export function renderInline(markdown: string): string {
+  const marked = new Marked({ gfm: true })
+  marked.use({
+    renderer: {
+      codespan({ text }: Tokens.Codespan) {
+        return `<code class="inline-code">${escapeHtml(text)}</code>`
+      },
+      link({ href, tokens }: Tokens.Link) {
+        return `<a href="${escapeHtml(rewriteHref(href))}" class="text-accent">${this.parser.parseInline(tokens)}</a>`
+      },
+    },
+  })
+  return marked.parseInline(markdown, { async: false })
+}
+
 // Reads the text off the markdown tokens instead of stripping tags from
 // rendered HTML: one regex pass can leave a `<script` behind, and the
 // round-trip would also carry escaped entities into what callers treat as
