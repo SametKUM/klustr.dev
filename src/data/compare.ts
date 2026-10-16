@@ -34,12 +34,12 @@ export const ROW_GROUPS: { id: RowGroup; label: string }[] = [
   { id: 'operations', label: 'Day-to-day operations' },
 ]
 
-export const REVIEWED_ON = '2026-09-20'
+export const REVIEWED_ON = '2026-10-16'
 
 export const COMPARE_INDEX = {
   title: 'Klustr compared with other Kubernetes UIs',
   description:
-    'Klustr compared with Lens, k9s and Headlamp on license, sign-in, what runs in the cluster, multi-cluster, RBAC, Helm, Argo CD, Flux, Gateway API, logs and terminals.',
+    'Klustr compared with Lens, k9s and Headlamp on license, sign-in, multi-cluster, RBAC, Helm, Argo CD, Flux, Tekton, Gateway API, Kyverno, logs and terminals.',
   lede: 'Lens, k9s and Headlamp are all good tools with different shapes. This page puts them next to Klustr on the questions people ask before switching, and links to a page for each.',
   pagesLede: 'Each page goes row by row and says where that tool is the better pick.',
   method: [
@@ -97,7 +97,8 @@ export const ROWS: Row[] = [
       klustr: { text: 'Apache-2.0, free', tone: 'yes' },
       lens: { text: 'Proprietary', tone: 'mid', sub: 'Free Personal plan with eligibility limits, paid plans beyond' },
       k9s: { text: 'Apache-2.0, free', tone: 'yes' },
-      headlamp: { text: 'Apache-2.0, free', tone: 'yes' },    },
+      headlamp: { text: 'Apache-2.0, free', tone: 'yes' },
+    },
   },
   {
     group: 'project',
@@ -106,7 +107,8 @@ export const ROWS: Row[] = [
       klustr: { text: 'Go + OS webview', sub: 'Wails, no bundled browser' },
       lens: { text: 'Electron', sub: 'Bundled Chromium and Node.js' },
       k9s: { text: 'Go terminal UI' },
-      headlamp: { text: 'Electron or in-cluster web', sub: 'Go backend, React frontend' },    },
+      headlamp: { text: 'Electron or in-cluster web', sub: 'Go backend, React frontend' },
+    },
   },
   {
     group: 'project',
@@ -115,7 +117,8 @@ export const ROWS: Row[] = [
       klustr: { text: 'macOS, Linux, Windows', sub: 'Windows build not code-signed' },
       lens: { text: 'macOS, Windows, Linux' },
       k9s: { text: 'macOS, Linux, Windows' },
-      headlamp: { text: 'macOS, Windows, Linux, browser' },    },
+      headlamp: { text: 'macOS, Windows, Linux, browser' },
+    },
   },
   {
     group: 'access',
@@ -124,7 +127,8 @@ export const ROWS: Row[] = [
       klustr: { text: 'Nothing', tone: 'yes', sub: 'Optional one-click metrics-server, removable from Klustr' },
       lens: { text: 'Nothing required', tone: 'yes', sub: 'Optional metrics stack' },
       k9s: { text: 'Nothing', tone: 'yes' },
-      headlamp: { text: 'Optional', tone: 'mid', sub: 'Desktop app runs locally; web mode is deployed in-cluster' },    },
+      headlamp: { text: 'Optional', tone: 'mid', sub: 'Desktop app runs locally; web mode is deployed in-cluster' },
+    },
   },
   {
     group: 'access',
@@ -133,7 +137,8 @@ export const ROWS: Row[] = [
       klustr: { text: 'None', tone: 'yes', sub: 'Your kubeconfig is the only credential' },
       lens: { text: 'Lens ID required', tone: 'no', sub: 'Needed to activate the desktop app' },
       k9s: { text: 'None', tone: 'yes' },
-      headlamp: { text: 'None on desktop', tone: 'yes', sub: 'Token or OIDC when deployed in-cluster' },    },
+      headlamp: { text: 'None on desktop', tone: 'yes', sub: 'Token or OIDC when deployed in-cluster' },
+    },
   },
   {
     group: 'clusters',
@@ -142,7 +147,8 @@ export const ROWS: Row[] = [
       klustr: { text: 'Aggregated table', tone: 'yes', sub: 'Two or more contexts in one list, named groups, color tags' },
       lens: { text: 'One cluster per view', tone: 'mid', sub: 'Catalog and hotbar to switch' },
       k9s: { text: 'One context at a time', tone: 'no', sub: 'Switch with :ctx' },
-      headlamp: { text: 'Multi-cluster view', tone: 'yes', sub: 'Select clusters and compare side by side' },    },
+      headlamp: { text: 'Multi-cluster view', tone: 'yes', sub: 'Select clusters and compare side by side' },
+    },
   },
   {
     group: 'clusters',
@@ -151,34 +157,68 @@ export const ROWS: Row[] = [
       klustr: { text: 'Access Review matrix', tone: 'yes', sub: 'Subject to effective permissions with the binding chain' },
       lens: { text: 'Roles and bindings', tone: 'mid' },
       k9s: { text: 'RBAC and policy views', tone: 'yes', sub: 'Reverse lookup for a user, group or ServiceAccount' },
-      headlamp: { text: 'Roles and bindings', tone: 'mid' },    },
+      headlamp: { text: 'Roles and bindings', tone: 'mid' },
+    },
   },
   {
     group: 'platform',
     label: 'Helm',
     cells: {
       klustr: { text: 'Built in', tone: 'yes', sub: 'Install, upgrade, rollback, uninstall with a dry-run diff; repo search' },
-      lens: { text: 'Built in', tone: 'yes', sub: 'Charts and releases' },
-      k9s: { text: 'Release view', tone: 'mid', sub: 'List, describe, uninstall' },
-      headlamp: { text: 'Via plugin', tone: 'mid', sub: 'App catalog plugin' },    },
+      lens: { text: 'Built in', tone: 'yes', sub: 'Charts and releases, upgrade and rollback' },
+      k9s: { text: 'Release view', tone: 'mid', sub: 'Values, history and rollback; no install or upgrade' },
+      headlamp: { text: 'Via plugin', tone: 'mid', sub: 'App Catalog plugin, bundled with the desktop app' },
+    },
   },
   {
     group: 'platform',
     label: 'Argo CD and Flux',
     cells: {
       klustr: { text: 'Built in, through the API', tone: 'yes', sub: 'Sync, refresh, reconcile, suspend; no CLIs' },
-      lens: { text: 'Via extensions', tone: 'mid' },
-      k9s: { text: 'Generic CRDs', tone: 'mid', sub: 'Community plugins add actions' },
-      headlamp: { text: 'Flux via plugin', tone: 'mid' },    },
+      lens: { text: 'Built in, paid plans', tone: 'mid', sub: 'Not in the free Personal plan' },
+      k9s: { text: 'Community plugins', tone: 'mid', sub: 'Sync, refresh, reconcile, suspend; Flux needs the flux CLI' },
+      headlamp: { text: 'Via plugins', tone: 'mid', sub: 'Official Flux plugin and Argo CD plugin (alpha)' },
+    },
+  },
+  {
+    group: 'platform',
+    label: 'Tekton',
+    cells: {
+      klustr: { text: 'Typed views', tone: 'yes', sub: 'PipelineRun task table, step logs, cancel and rerun; no tkn' },
+      lens: { text: 'Generic CRDs', tone: 'mid' },
+      k9s: { text: 'Generic CRDs', tone: 'mid' },
+      headlamp: { text: 'Generic CRDs', tone: 'mid' },
+    },
   },
   {
     group: 'platform',
     label: 'Gateway API',
     cells: {
       klustr: { text: 'Typed views', tone: 'yes', sub: 'Listeners, rule matrix, RouteParentStatus' },
+      lens: { text: 'Built in', tone: 'yes', sub: 'Including TCP, UDP and TLS routes and ListenerSets' },
+      k9s: { text: 'Generic CRDs', tone: 'mid' },
+      headlamp: { text: 'Built in', tone: 'yes', sub: 'Including TCPRoute and UDPRoute' },
+    },
+  },
+  {
+    group: 'platform',
+    label: 'Istio',
+    cells: {
+      klustr: { text: 'Typed views', tone: 'yes', sub: 'VirtualServices, DestinationRules, PeerAuthentications' },
+      lens: { text: 'Generic CRDs', tone: 'mid', sub: 'A community extension draws them in a traffic graph' },
+      k9s: { text: 'Generic CRDs', tone: 'mid' },
+      headlamp: { text: 'Via plugin', tone: 'mid', sub: 'Community Istio plugins' },
+    },
+  },
+  {
+    group: 'platform',
+    label: 'Cilium',
+    cells: {
+      klustr: { text: 'Typed views', tone: 'yes', sub: 'Policies as rule tables, endpoints, IP pools, BGP' },
       lens: { text: 'Generic CRDs', tone: 'mid' },
       k9s: { text: 'Generic CRDs', tone: 'mid' },
-      headlamp: { text: 'Built in', tone: 'yes', sub: 'Including TCPRoute and UDPRoute' },    },
+      headlamp: { text: 'Generic CRDs', tone: 'mid' },
+    },
   },
   {
     group: 'platform',
@@ -186,8 +226,39 @@ export const ROWS: Row[] = [
     cells: {
       klustr: { text: 'Typed views', tone: 'yes', sub: 'Issuance chain and one-click renew' },
       lens: { text: 'Generic CRDs', tone: 'mid' },
+      k9s: { text: 'Community plugin', tone: 'mid', sub: 'Status and renew through cmctl' },
+      headlamp: { text: 'Via plugin', tone: 'mid', sub: 'Official cert-manager plugin' },
+    },
+  },
+  {
+    group: 'platform',
+    label: 'Kyverno',
+    cells: {
+      klustr: { text: 'Typed views', tone: 'yes', sub: 'Policies, exceptions, policy reports and each policy’s violations' },
+      lens: { text: 'Via extension', tone: 'mid', sub: 'Community extension; installing extensions needs a paid plan' },
       k9s: { text: 'Generic CRDs', tone: 'mid' },
-      headlamp: { text: 'Generic CRDs', tone: 'mid' },    },
+      headlamp: { text: 'Via plugin', tone: 'mid', sub: 'Official plugin with policy reports' },
+    },
+  },
+  {
+    group: 'platform',
+    label: 'Karpenter',
+    cells: {
+      klustr: { text: 'Typed views', tone: 'yes', sub: 'NodePools against their limits, NodeClaims, EC2NodeClasses' },
+      lens: { text: 'Generic CRDs', tone: 'mid' },
+      k9s: { text: 'Community plugin', tone: 'mid', sub: 'Jumps between NodePools, NodeClaims and Nodes' },
+      headlamp: { text: 'Via plugin', tone: 'mid', sub: 'Official plugin, marked alpha' },
+    },
+  },
+  {
+    group: 'platform',
+    label: 'KEDA',
+    cells: {
+      klustr: { text: 'Triggers on the HPA', tone: 'mid', sub: 'ScaledObjects stay in the generic CRD browser' },
+      lens: { text: 'Generic CRDs', tone: 'mid' },
+      k9s: { text: 'Community plugin', tone: 'mid', sub: 'Pause and resume ScaledObjects' },
+      headlamp: { text: 'Via plugin', tone: 'mid', sub: 'Official KEDA plugin' },
+    },
   },
   {
     group: 'operations',
@@ -196,7 +267,8 @@ export const ROWS: Row[] = [
       klustr: { text: 'Multi-pod stream', tone: 'yes', sub: 'Per-pod colors, follow, regex, save' },
       lens: { text: 'Per container', tone: 'mid' },
       k9s: { text: 'Per pod or workload', tone: 'yes', sub: 'Aggregated for a deployment, filters' },
-      headlamp: { text: 'Per container', tone: 'mid' },    },
+      headlamp: { text: 'Per container', tone: 'mid' },
+    },
   },
   {
     group: 'operations',
@@ -205,7 +277,8 @@ export const ROWS: Row[] = [
       klustr: { text: 'Exec, debug container, node shell', tone: 'yes' },
       lens: { text: 'Pod and node shell', tone: 'yes' },
       k9s: { text: 'Pod and node shell', tone: 'yes', sub: 'Node shell behind a feature gate' },
-      headlamp: { text: 'Pod terminal', tone: 'yes' },    },
+      headlamp: { text: 'Pod terminal', tone: 'yes' },
+    },
   },
   {
     group: 'operations',
@@ -214,7 +287,8 @@ export const ROWS: Row[] = [
       klustr: { text: 'Drawer per context', tone: 'yes', sub: 'KUBECONFIG preset to the active context' },
       lens: { text: 'Built in', tone: 'yes' },
       k9s: { text: 'Is the terminal', tone: 'yes' },
-      headlamp: { text: 'None', tone: 'no' },    },
+      headlamp: { text: 'None', tone: 'no' },
+    },
   },
 ]
 
@@ -247,18 +321,19 @@ export const COMPARE_PAGES: ComparePage[] = [
       '**No sign-in.** Lens Desktop needs a Lens ID to activate, and the free Personal plan is limited to education and to companies under a revenue threshold. Klustr has no account, no activation and no plan tiers. It is Apache-2.0 licensed and free for any use.',
       '**Nothing installed in the cluster.** Both tools read your kubeconfig. Klustr never asks to deploy anything either; the single opt-in exception is a one-click metrics-server install that Klustr can also remove.',
       '**Several clusters in one table.** Lens shows one cluster per view. Klustr drives two or more contexts as one virtual cluster with a Context column, named groups and color tags, so a fleet or a prod-versus-staging comparison is one screen.',
-      '**GitOps and platform tooling without CLIs or extensions.** Argo CD, Flux, Gateway API, cert-manager, Istio, Karpenter and KEDA get typed views out of the box, driven through the Kubernetes API. In Lens these areas are covered by extensions.',
+      '**Platform tooling without a plan, CLIs or extensions.** Argo CD, Flux, Tekton, cert-manager, Istio, Cilium, Kyverno and Karpenter get typed views out of the box, driven through the Kubernetes API. Lens builds in Gateway API for everyone and Argo CD and Flux on its paid plans; the others are generic custom resources there or come from community extensions, which also need a paid plan to install.',
       '**Access Review.** Klustr answers “what can this ServiceAccount do in this namespace?” with a live permission matrix and the binding and role chain behind every entry. Lens lists roles and bindings.',
       '**Native webview instead of Electron.** Klustr is a Go binary that renders through the operating system’s webview via Wails, so there is no bundled Chromium. The macOS archive is about 22 MB.',
     ],
     stronger: [
       '**Windows installer.** Lens ships Windows installers. Klustr ships a portable zip that is not code-signed yet.',
-      '**Extension marketplace.** Lens has a large extension ecosystem. Klustr has no plugin system; its integrations are built in.',
+      '**Extensions.** Lens has an extension API and a marketplace; installing extensions needs a paid plan. Klustr has no plugin system; its integrations are built in.',
+      '**Argo CD breadth.** On its paid plans Lens covers ApplicationSets, Projects, Repositories and Clusters next to Applications, and adds a Flux health dashboard. Klustr’s Argo CD view is Applications; the other Argo CD kinds stay in the generic CRD browser.',
       '**Team and cloud features.** Lens offers shared catalogs, cloud-connected clusters and enterprise SSO. Klustr is a single-user desktop client.',
       '**Metrics dashboards.** Lens can install and read a Prometheus stack. Klustr reads metrics-server for CPU and memory and does not chart Prometheus.',
     ],
     verdict:
-      'Pick Lens if you need a Windows installer, an extension marketplace or team features. Pick Klustr if you want a free, open-source client with no account that treats Helm, GitOps and Gateway API as first-class and can show several clusters at once.',
+      'Pick Lens if you need a Windows installer, extensions or team features. Pick Klustr if you want a free, open-source client with no account that covers Helm, GitOps, Tekton and Gateway API without a paid plan and can show several clusters at once.',
   },
   {
     slug: 'k9s',
@@ -273,7 +348,7 @@ export const COMPARE_PAGES: ComparePage[] = [
     ],
     different: [
       '**Several contexts in one table.** k9s works in one context and switches with `:ctx`. Klustr aggregates two or more contexts into one list with a Context column, saved groups and a color stripe that tells you which environment you are touching.',
-      '**Typed views for platform tooling.** Argo CD Applications, Flux reconcilers, Gateway API routes and cert-manager chains render as tables with status pills and actions. In k9s they are generic custom resources, with community plugins adding some actions.',
+      '**Typed views for platform tooling.** Argo CD Applications, Flux reconcilers, Tekton runs, Gateway API routes and cert-manager chains render as tables with status pills and actions. In k9s they are generic custom resources, with community plugins adding actions for some of them.',
       '**Diffs before changes.** Helm upgrades show a dry-run diff, YAML edits show a server-side dry-run diff, and rollout history shows a side-by-side template diff before you roll back.',
       '**Access Review.** k9s can reverse-look-up what a subject may do. Klustr renders the answer as a resource-by-verb matrix with the binding and role behind every cell, live across every active context.',
       '**k9s stays one keystroke away.** The built-in terminal drawer opens a local shell with KUBECONFIG already set to the active context, so `k9s`, `kubectl` and `stern` run against the right cluster without any setup.',
@@ -300,8 +375,8 @@ export const COMPARE_PAGES: ComparePage[] = [
     ],
     different: [
       '**Never runs in the cluster.** Headlamp can be deployed as an in-cluster web UI or run as a desktop app. Klustr only runs on your machine and installs nothing in the cluster; there is no deployment to expose, upgrade or secure.',
-      '**Helm, Argo CD and Flux are built in.** Headlamp covers Helm and Flux through plugins. Klustr ships Helm v3 with a dry-run diff, Argo CD sync and refresh, and Flux reconcile and suspend without plugins or CLIs.',
-      '**cert-manager, Istio, Karpenter and KEDA.** Klustr promotes these CRD families to typed views with status and actions, including the full certificate issuance chain and one-click renew.',
+      '**Helm, Argo CD and Flux without plugins.** Headlamp covers them through official plugins, the Argo CD one still in alpha. Klustr ships Helm v3 with a dry-run diff, Argo CD sync and refresh, and Flux reconcile and suspend, with no plugins or CLIs.',
+      '**Tekton, Cilium and the other platform tools built in.** Headlamp has no Tekton or Cilium plugin, and covers cert-manager, Kyverno and Karpenter through official plugins and Istio through community ones. Klustr ships typed views for all of them, including a PipelineRun task table with step logs, the full certificate issuance chain with one-click renew, and Cilium policies as rule tables.',
       '**Access Review.** Headlamp lists roles and bindings. Klustr computes a subject’s effective permissions as a matrix with the binding chain behind every entry.',
       '**Aggregated rows, not side-by-side panes.** Both tools support several clusters. Headlamp compares clusters side by side; Klustr merges them into one table with a Context column so a fleet reads as one cluster.',
       '**Operations from the desktop.** A local terminal drawer bound to the active context, a root node shell, cordon and PDB-aware drain, and ephemeral debug containers for shell-less images.',
@@ -309,6 +384,7 @@ export const COMPARE_PAGES: ComparePage[] = [
     stronger: [
       '**In-cluster mode for a team.** Deploy Headlamp once with OIDC and every teammate gets a browser UI without installing anything locally.',
       '**Plugin ecosystem and resource map.** Headlamp has a documented plugin API and a resource relationship map.',
+      '**KEDA.** Headlamp’s official KEDA plugin lists and manages KEDA resources. Klustr maps KEDA triggers onto the HPAs they drive and leaves ScaledObjects in the generic CRD browser.',
       '**CNCF governance.** Headlamp is a Kubernetes SIG UI project with community governance, and the UI the archived Kubernetes Dashboard points its users to. Klustr is a single-maintainer open-source project.',
     ],
     verdict:
