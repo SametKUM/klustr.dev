@@ -15,6 +15,13 @@ export type GuideMeta = {
   summary: string
 }
 
+export const DOCS_PAGE = {
+  title: 'Documentation',
+  description:
+    'Task-focused guides for Klustr: connecting to contexts, multi-cluster aggregated mode, credential helpers, debugging workloads, Helm, Argo CD, Flux and Tekton, Gateway API, cert-manager, Kyverno and custom resources.',
+  lede: 'These guides cover how to use Klustr day to day. They are rendered from the markdown in the site repository, so the GitHub copy and this site never drift apart.',
+}
+
 export const GUIDE_GROUPS: { name: string; guides: GuideMeta[] }[] = [
   {
     name: 'getting around',

@@ -1,3 +1,5 @@
+import { ISSUES_URL } from '../lib/site'
+
 export type ToolId = 'klustr' | 'lens' | 'k9s' | 'headlamp' | 'dashboard'
 
 export type Tool = {
@@ -33,6 +35,28 @@ export const ROW_GROUPS: { id: RowGroup; label: string }[] = [
 ]
 
 export const REVIEWED_ON = '2026-09-20'
+
+export const COMPARE_INDEX = {
+  title: 'Klustr compared with other Kubernetes UIs',
+  description:
+    'Klustr compared with Lens, k9s, Headlamp and Kubernetes Dashboard on license, sign-in, what runs in the cluster, multi-cluster, RBAC, Helm, Argo CD, Flux, Gateway API, logs and terminals.',
+  lede: 'Lens, k9s, Headlamp and Kubernetes Dashboard are all good tools with different shapes. This page puts them next to Klustr on the questions people ask before switching, and links to a page for each.',
+  pagesLede: 'Each page goes row by row and says where that tool is the better pick.',
+  method: [
+    `Every cell about another tool comes from that tool’s public documentation, README or release notes, and the table was last reviewed on ${REVIEWED_ON}. Cells are worded as capabilities, not judgements, and where a feature exists only through plugins or extensions the cell says so. There are no memory or speed numbers here because none have been measured side by side.`,
+    `If a row is wrong or out of date, [open an issue](${ISSUES_URL}) with a link to the source and it will be corrected.`,
+  ],
+}
+
+// Section headings shared by the comparison pages and their markdown versions.
+export const COMPARE_HEADINGS = {
+  glance: 'At a glance',
+  pages: 'Head-to-head pages',
+  method: 'How this table is kept honest',
+  different: 'Where Klustr is different',
+  stronger: (tool: string) => `Where ${tool} is stronger`,
+  which: 'Which one to pick',
+}
 
 export const TOOLS: Record<ToolId, Tool> = {
   klustr: {

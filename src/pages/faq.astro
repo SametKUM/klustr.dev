@@ -1,11 +1,8 @@
 ---
 import DocsLayout from '../layouts/DocsLayout.astro'
-import { FAQ } from '../data/faq'
+import { FAQ, FAQ_PAGE } from '../data/faq'
 import { renderFragment, stripMarkdown } from '../lib/markdown'
 import { breadcrumbLd, faqLd, graph } from '../lib/seo'
-
-const description =
-  'Answers about Klustr: what it installs in the cluster (nothing), supported platforms, license, telemetry, authentication with exec plugins and aws-vault, multi-cluster mode, read-only mode, RBAC-scoped lists and custom resources.'
 
 const items = FAQ.map((f) => ({
   ...f,
@@ -22,10 +19,10 @@ const jsonLd = graph([
 ---
 
 <DocsLayout
-  title="Frequently asked questions"
+  title={FAQ_PAGE.title}
   eyebrow="faq"
-  lede="Short answers with links to the guide that goes deeper. If your question is missing, open an issue and it will be added here."
-  description={description}
+  lede={FAQ_PAGE.lede}
+  description={FAQ_PAGE.description}
   path="/faq/"
   headings={headings}
   jsonLd={jsonLd}
