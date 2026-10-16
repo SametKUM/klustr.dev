@@ -27,7 +27,7 @@ klustr.dev/
 
 ## Conventions
 
-- **Docs pages are the guides in `docs/guide/`.** `/docs/<slug>/` renders `docs/guide/<slug>.md` at build time through `marked` (`src/lib/guides.ts`), so the GitHub copy and the site never drift. Adding a guide means adding its card to `GUIDE_GROUPS` too; the build fails if a guide is missing from the index. `guide.md#anchor` links are rewritten to site routes and headings get GitHub-style ids. Links to files in the app repository are absolute GitHub URLs.
+- **Docs pages are the guides in `docs/guide/`.** `/docs/<slug>/` renders `docs/guide/<slug>.md` at build time through `marked` (`src/lib/guides.ts`), so the GitHub copy and the site never drift. Adding a guide means adding its card to `GUIDE_GROUPS` and its line to `docs/guide/README.md` too; the build fails if a guide is missing from either index. `guide.md#anchor` links are rewritten to site routes and headings get GitHub-style ids. Links to files in the app repository are absolute GitHub URLs.
 - **Guides follow the app.** They describe the released app, so a guide changes in its own pull request here when a feature lands in the app repository.
 - **Comparison content is data.** `src/data/compare.ts` holds the table rows and the per-tool pages, with a `REVIEWED_ON` date. Cells state capabilities, not judgements, and cite nothing that has not been checked in the other tool's documentation. No memory or speed numbers unless measured side by side.
 - **Numbers on the landing page are counts, not benchmarks** (resource kinds, integrations, themes, archive size). Do not add RAM or start-up claims without a measurement to back them.
