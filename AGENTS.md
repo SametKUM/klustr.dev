@@ -17,10 +17,12 @@ klustr.dev/
     ├── styles/global.css       paper / blueprint tokens + the components layer
     ├── layouts/                BaseLayout (SEO head, theme boot, analytics), DocsLayout, CompareLayout
     ├── components/             Nav, Footer, InstallTabs, CommandBlock, HeroSlider, CompareTable, BrandIcon
-    ├── data/                   screenshots, install commands, comparison rows and pages, FAQ
-    ├── lib/                    site constants, JSON-LD builders, GitHub fetch, marked-based
-    │                           markdown, guide loader, git dates
-    └── pages/                  index, install, docs/, compare/, faq, changelog, llms.txt, 404
+    ├── data/                   screenshots, install steps and copy, comparison rows and pages, FAQ
+    ├── lib/                    site constants, JSON-LD builders, GitHub fetch, changelog entries,
+    │                           marked-based markdown, guide loader, git dates, llms.txt and the
+    │                           markdown versions of pages
+    └── pages/                  index, install, docs/, compare/, faq, changelog, llms.txt,
+                                [...page].md, 404
 ```
 
 ## Conventions
@@ -33,7 +35,7 @@ klustr.dev/
 - **GitHub data at build time.** The changelog page and the version label come from the app repository's Releases API (`src/lib/github.ts`); a failed fetch degrades to a GitHub link instead of failing the build. CI passes `GITHUB_TOKEN` to lift the anonymous rate limit.
 - **Search-result limits are enforced in one place.** `BaseLayout` clamps every meta description to about 158 characters (ending on a sentence when it can) and drops the `· Klustr` title suffix when it would push a title past 60. The home page uses `SITE.title` and `SITE.metaDescription`, written to those limits by hand; `SITE.description` is the long form for structured data only. Headings name the product or integration they describe (`Helm: dry-run first, then apply.`), and the H1 contains the word Kubernetes.
 - **`dependencies` is what the site redistributes.** The package is `private`, nothing is published to npm, and the deployed artifact is `dist/`. So `dependencies` holds only what actually reaches a visitor — the Geist fonts, the simple-icons paths and the Swetrix snippet — and every compiler, generator and asset pipeline lives in `devDependencies`, Astro and Tailwind included, which keeps the production tree an honest list of redistributed third-party material. `sharp` (libvips, LGPL) runs only during `astro build` and never reaches `dist/`. `npm ci` installs both sets, so the build is unaffected.
-- **Machine-readable index.** `/llms.txt` is generated from the same data the pages use (guide headings and summaries, comparison pages, site constants), and `/llms-full.txt` concatenates every guide in full. Both are Astro endpoints, so a new guide appears in them without a second edit. Neither is in the sitemap.
+- **Markdown for agents.** Following [llmstxt.org](https://llmstxt.org/), every docs, install, FAQ, comparison and changelog page also exists as markdown at its URL plus `index.md` (`/docs/helm/index.md`), built by `src/lib/llms.ts` and served through `src/pages/[...page].md.ts`. Those pages point to it with `<link rel="alternate" type="text/markdown">`, and every page points to `/llms.txt` with `rel="describedby"`. `/llms.txt` links the markdown versions and carries the latest release and the feature list; `/llms-full.txt` holds the install steps, every guide, the FAQ and the comparisons in full. All of it renders from the same data and guide files as the HTML, so page copy lives in `src/data` (or beside its loader in `src/lib`), not in the `.astro` templates: prose added to a page goes into its data and its markdown builder. Links in the markdown are absolute, and the build fails when one would only resolve on the site. None of these files is in the sitemap.
 - **Dates come from git.** `src/lib/git.ts` reads first and last commit dates; docs pages put them in `datePublished` / `dateModified`, compare pages use `REVIEWED_ON` as `dateModified`, the home page uses the first and latest release, and `astro.config.mjs` sets sitemap `<lastmod>` from the same commit dates. The workflows check out with `fetch-depth: 0` so those dates are real, not the clone time.
 - `npm run typecheck` is `astro check`; TypeScript stays on 6.x until `@astrojs/check` accepts 7 (Dependabot ignores that major).
 - The social card is rendered from `og-template.html`; regenerate `public/og.png` after changing the hero copy.
