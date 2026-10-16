@@ -1,6 +1,6 @@
 import { ISSUES_URL } from '../lib/site'
 
-export type ToolId = 'klustr' | 'lens' | 'k9s' | 'headlamp' | 'dashboard'
+export type ToolId = 'klustr' | 'lens' | 'k9s' | 'headlamp'
 
 export type Tool = {
   id: ToolId
@@ -39,8 +39,8 @@ export const REVIEWED_ON = '2026-09-20'
 export const COMPARE_INDEX = {
   title: 'Klustr compared with other Kubernetes UIs',
   description:
-    'Klustr compared with Lens, k9s, Headlamp and Kubernetes Dashboard on license, sign-in, what runs in the cluster, multi-cluster, RBAC, Helm, Argo CD, Flux, Gateway API, logs and terminals.',
-  lede: 'Lens, k9s, Headlamp and Kubernetes Dashboard are all good tools with different shapes. This page puts them next to Klustr on the questions people ask before switching, and links to a page for each.',
+    'Klustr compared with Lens, k9s and Headlamp on license, sign-in, what runs in the cluster, multi-cluster, RBAC, Helm, Argo CD, Flux, Gateway API, logs and terminals.',
+  lede: 'Lens, k9s and Headlamp are all good tools with different shapes. This page puts them next to Klustr on the questions people ask before switching, and links to a page for each.',
   pagesLede: 'Each page goes row by row and says where that tool is the better pick.',
   method: [
     `Every cell about another tool comes from that tool’s public documentation, README or release notes, and the table was last reviewed on ${REVIEWED_ON}. Cells are worded as capabilities, not judgements, and where a feature exists only through plugins or extensions the cell says so. There are no memory or speed numbers here because none have been measured side by side.`,
@@ -87,13 +87,6 @@ export const TOOLS: Record<ToolId, Tool> = {
     summary:
       'Kubernetes SIG UI project with a plugin system. Runs as an Electron desktop app or is deployed into the cluster as a web UI. Apache-2.0.',
   },
-  dashboard: {
-    id: 'dashboard',
-    name: 'Kubernetes Dashboard',
-    url: 'https://github.com/kubernetes/dashboard',
-    summary:
-      'The project’s general-purpose web UI. Deployed into the cluster with a Helm chart and reached through a proxy or ingress with a bearer token. Apache-2.0.',
-  },
 }
 
 export const ROWS: Row[] = [
@@ -104,9 +97,7 @@ export const ROWS: Row[] = [
       klustr: { text: 'Apache-2.0, free', tone: 'yes' },
       lens: { text: 'Proprietary', tone: 'mid', sub: 'Free Personal plan with eligibility limits, paid plans beyond' },
       k9s: { text: 'Apache-2.0, free', tone: 'yes' },
-      headlamp: { text: 'Apache-2.0, free', tone: 'yes' },
-      dashboard: { text: 'Apache-2.0, free', tone: 'yes' },
-    },
+      headlamp: { text: 'Apache-2.0, free', tone: 'yes' },    },
   },
   {
     group: 'project',
@@ -115,9 +106,7 @@ export const ROWS: Row[] = [
       klustr: { text: 'Go + OS webview', sub: 'Wails, no bundled browser' },
       lens: { text: 'Electron', sub: 'Bundled Chromium and Node.js' },
       k9s: { text: 'Go terminal UI' },
-      headlamp: { text: 'Electron or in-cluster web', sub: 'Go backend, React frontend' },
-      dashboard: { text: 'Web app in the cluster' },
-    },
+      headlamp: { text: 'Electron or in-cluster web', sub: 'Go backend, React frontend' },    },
   },
   {
     group: 'project',
@@ -126,9 +115,7 @@ export const ROWS: Row[] = [
       klustr: { text: 'macOS, Linux, Windows', sub: 'Windows build not code-signed' },
       lens: { text: 'macOS, Windows, Linux' },
       k9s: { text: 'macOS, Linux, Windows' },
-      headlamp: { text: 'macOS, Windows, Linux, browser' },
-      dashboard: { text: 'Browser' },
-    },
+      headlamp: { text: 'macOS, Windows, Linux, browser' },    },
   },
   {
     group: 'access',
@@ -137,9 +124,7 @@ export const ROWS: Row[] = [
       klustr: { text: 'Nothing', tone: 'yes', sub: 'Optional one-click metrics-server, removable from Klustr' },
       lens: { text: 'Nothing required', tone: 'yes', sub: 'Optional metrics stack' },
       k9s: { text: 'Nothing', tone: 'yes' },
-      headlamp: { text: 'Optional', tone: 'mid', sub: 'Desktop app runs locally; web mode is deployed in-cluster' },
-      dashboard: { text: 'Required', tone: 'no', sub: 'Deployed with its Helm chart' },
-    },
+      headlamp: { text: 'Optional', tone: 'mid', sub: 'Desktop app runs locally; web mode is deployed in-cluster' },    },
   },
   {
     group: 'access',
@@ -148,9 +133,7 @@ export const ROWS: Row[] = [
       klustr: { text: 'None', tone: 'yes', sub: 'Your kubeconfig is the only credential' },
       lens: { text: 'Lens ID required', tone: 'no', sub: 'Needed to activate the desktop app' },
       k9s: { text: 'None', tone: 'yes' },
-      headlamp: { text: 'None on desktop', tone: 'yes', sub: 'Token or OIDC when deployed in-cluster' },
-      dashboard: { text: 'Bearer token or kubeconfig', tone: 'mid' },
-    },
+      headlamp: { text: 'None on desktop', tone: 'yes', sub: 'Token or OIDC when deployed in-cluster' },    },
   },
   {
     group: 'clusters',
@@ -159,9 +142,7 @@ export const ROWS: Row[] = [
       klustr: { text: 'Aggregated table', tone: 'yes', sub: 'Two or more contexts in one list, named groups, color tags' },
       lens: { text: 'One cluster per view', tone: 'mid', sub: 'Catalog and hotbar to switch' },
       k9s: { text: 'One context at a time', tone: 'no', sub: 'Switch with :ctx' },
-      headlamp: { text: 'Multi-cluster view', tone: 'yes', sub: 'Select clusters and compare side by side' },
-      dashboard: { text: 'The cluster it runs in', tone: 'no' },
-    },
+      headlamp: { text: 'Multi-cluster view', tone: 'yes', sub: 'Select clusters and compare side by side' },    },
   },
   {
     group: 'clusters',
@@ -170,9 +151,7 @@ export const ROWS: Row[] = [
       klustr: { text: 'Access Review matrix', tone: 'yes', sub: 'Subject to effective permissions with the binding chain' },
       lens: { text: 'Roles and bindings', tone: 'mid' },
       k9s: { text: 'RBAC and policy views', tone: 'yes', sub: 'Reverse lookup for a user, group or ServiceAccount' },
-      headlamp: { text: 'Roles and bindings', tone: 'mid' },
-      dashboard: { text: 'Roles and bindings', tone: 'mid' },
-    },
+      headlamp: { text: 'Roles and bindings', tone: 'mid' },    },
   },
   {
     group: 'platform',
@@ -181,9 +160,7 @@ export const ROWS: Row[] = [
       klustr: { text: 'Built in', tone: 'yes', sub: 'Install, upgrade, rollback, uninstall with a dry-run diff; repo search' },
       lens: { text: 'Built in', tone: 'yes', sub: 'Charts and releases' },
       k9s: { text: 'Release view', tone: 'mid', sub: 'List, describe, uninstall' },
-      headlamp: { text: 'Via plugin', tone: 'mid', sub: 'App catalog plugin' },
-      dashboard: { text: 'None', tone: 'no' },
-    },
+      headlamp: { text: 'Via plugin', tone: 'mid', sub: 'App catalog plugin' },    },
   },
   {
     group: 'platform',
@@ -192,9 +169,7 @@ export const ROWS: Row[] = [
       klustr: { text: 'Built in, through the API', tone: 'yes', sub: 'Sync, refresh, reconcile, suspend; no CLIs' },
       lens: { text: 'Via extensions', tone: 'mid' },
       k9s: { text: 'Generic CRDs', tone: 'mid', sub: 'Community plugins add actions' },
-      headlamp: { text: 'Flux via plugin', tone: 'mid' },
-      dashboard: { text: 'Generic CRDs', tone: 'mid' },
-    },
+      headlamp: { text: 'Flux via plugin', tone: 'mid' },    },
   },
   {
     group: 'platform',
@@ -203,9 +178,7 @@ export const ROWS: Row[] = [
       klustr: { text: 'Typed views', tone: 'yes', sub: 'Listeners, rule matrix, RouteParentStatus' },
       lens: { text: 'Generic CRDs', tone: 'mid' },
       k9s: { text: 'Generic CRDs', tone: 'mid' },
-      headlamp: { text: 'Built in', tone: 'yes', sub: 'Including TCPRoute and UDPRoute' },
-      dashboard: { text: 'Generic CRDs', tone: 'mid' },
-    },
+      headlamp: { text: 'Built in', tone: 'yes', sub: 'Including TCPRoute and UDPRoute' },    },
   },
   {
     group: 'platform',
@@ -214,9 +187,7 @@ export const ROWS: Row[] = [
       klustr: { text: 'Typed views', tone: 'yes', sub: 'Issuance chain and one-click renew' },
       lens: { text: 'Generic CRDs', tone: 'mid' },
       k9s: { text: 'Generic CRDs', tone: 'mid' },
-      headlamp: { text: 'Generic CRDs', tone: 'mid' },
-      dashboard: { text: 'Generic CRDs', tone: 'mid' },
-    },
+      headlamp: { text: 'Generic CRDs', tone: 'mid' },    },
   },
   {
     group: 'operations',
@@ -225,9 +196,7 @@ export const ROWS: Row[] = [
       klustr: { text: 'Multi-pod stream', tone: 'yes', sub: 'Per-pod colors, follow, regex, save' },
       lens: { text: 'Per container', tone: 'mid' },
       k9s: { text: 'Per pod or workload', tone: 'yes', sub: 'Aggregated for a deployment, filters' },
-      headlamp: { text: 'Per container', tone: 'mid' },
-      dashboard: { text: 'Per container', tone: 'mid' },
-    },
+      headlamp: { text: 'Per container', tone: 'mid' },    },
   },
   {
     group: 'operations',
@@ -236,9 +205,7 @@ export const ROWS: Row[] = [
       klustr: { text: 'Exec, debug container, node shell', tone: 'yes' },
       lens: { text: 'Pod and node shell', tone: 'yes' },
       k9s: { text: 'Pod and node shell', tone: 'yes', sub: 'Node shell behind a feature gate' },
-      headlamp: { text: 'Pod terminal', tone: 'yes' },
-      dashboard: { text: 'Exec', tone: 'yes' },
-    },
+      headlamp: { text: 'Pod terminal', tone: 'yes' },    },
   },
   {
     group: 'operations',
@@ -247,9 +214,7 @@ export const ROWS: Row[] = [
       klustr: { text: 'Drawer per context', tone: 'yes', sub: 'KUBECONFIG preset to the active context' },
       lens: { text: 'Built in', tone: 'yes' },
       k9s: { text: 'Is the terminal', tone: 'yes' },
-      headlamp: { text: 'None', tone: 'no' },
-      dashboard: { text: 'None', tone: 'no' },
-    },
+      headlamp: { text: 'None', tone: 'no' },    },
   },
 ]
 
@@ -344,36 +309,10 @@ export const COMPARE_PAGES: ComparePage[] = [
     stronger: [
       '**In-cluster mode for a team.** Deploy Headlamp once with OIDC and every teammate gets a browser UI without installing anything locally.',
       '**Plugin ecosystem and resource map.** Headlamp has a documented plugin API and a resource relationship map.',
-      '**CNCF governance.** Headlamp is a Kubernetes SIG UI project with community governance. Klustr is a single-maintainer open-source project.',
+      '**CNCF governance.** Headlamp is a Kubernetes SIG UI project with community governance, and the UI the archived Kubernetes Dashboard points its users to. Klustr is a single-maintainer open-source project.',
     ],
     verdict:
       'Pick Headlamp for a shared, in-cluster web UI or if you want to write plugins. Pick Klustr for a desktop client that installs nothing, treats Helm, GitOps and cert-manager as first-class and can show several clusters as one.',
-  },
-  {
-    slug: 'kubernetes-dashboard',
-    tool: 'dashboard',
-    title: 'Klustr vs Kubernetes Dashboard: a desktop alternative',
-    heading: 'Klustr vs Kubernetes Dashboard',
-    description:
-      'Why a desktop client can replace the in-cluster Kubernetes Dashboard for day-to-day work: nothing to deploy or expose, every cluster in one app, Helm, GitOps, Gateway API and RBAC review.',
-    intro: [
-      'Kubernetes Dashboard is the project’s general-purpose web UI. It is deployed into the cluster with a Helm chart, reached through a proxy or an ingress, and signed into with a bearer token or kubeconfig. Klustr is the opposite shape: a desktop app on your machine that installs nothing in the cluster and sees every cluster your kubeconfig knows about.',
-      `Facts about Kubernetes Dashboard come from its repository and documentation and were reviewed on ${REVIEWED_ON}. Corrections are welcome as [an issue](https://github.com/SametKUM/klustr/issues).`,
-    ],
-    different: [
-      '**Nothing to deploy, expose or upgrade.** The Dashboard is a workload you run, secure and keep current in every cluster. Klustr is a binary on your laptop that talks to the API the way kubectl does.',
-      '**Every cluster, and several at once.** The Dashboard shows the cluster it is installed in. Klustr lists every kubeconfig context and can aggregate two or more into one table.',
-      '**Helm, Argo CD, Flux, Gateway API and cert-manager.** The Dashboard has no Helm support and renders custom resources generically. Klustr ships typed views and actions for all of them.',
-      '**Access Review.** The Dashboard lists roles and bindings. Klustr shows a subject’s effective permissions as a matrix with the binding chain.',
-      '**Operations.** Multi-pod log streaming, exec and ephemeral debug containers, a root node shell, cordon and drain, a local terminal drawer, YAML edits with a dry-run diff and one-click rollout rollback.',
-    ],
-    stronger: [
-      '**Browser only.** Teammates reach the Dashboard with a URL and a token; nobody installs anything locally.',
-      '**Part of the Kubernetes project.** The Dashboard is maintained under the Kubernetes organisation.',
-      '**Any operating system.** A browser is the only requirement. Klustr ships for macOS, Linux and Windows.',
-    ],
-    verdict:
-      'Keep the Dashboard if you need a browser UI for people who cannot install a desktop app. Use Klustr if you operate clusters from your own machine and want Helm, GitOps, Gateway API and several clusters in one window with nothing deployed.',
   },
 ]
 

@@ -49,6 +49,11 @@ function lastmodFor(pathname) {
 export default defineConfig({
   site: 'https://klustr.dev',
   trailingSlash: 'always',
+  // The Kubernetes Dashboard comparison was dropped when that project was
+  // archived; its old URL lands on the comparison index.
+  redirects: {
+    '/compare/kubernetes-dashboard/': '/compare/',
+  },
   integrations: [
     sitemap({
       serialize(item) {

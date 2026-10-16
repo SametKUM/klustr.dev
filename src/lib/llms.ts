@@ -233,7 +233,7 @@ export async function llmsTxt(): Promise<string> {
       link(
         'All comparisons',
         md('/compare/'),
-        `Klustr next to Lens, k9s, Headlamp and Kubernetes Dashboard, row by row, reviewed ${REVIEWED_ON}.`,
+        `Klustr next to Lens, k9s and Headlamp, row by row, reviewed ${REVIEWED_ON}.`,
       ),
       ...COMPARE_PAGES.map((p) => link(p.heading, md(`/compare/${p.slug}/`), TOOLS[p.tool].summary)),
     ]),

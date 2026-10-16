@@ -5,7 +5,7 @@ import { COMPARE_HEADINGS, COMPARE_INDEX, COMPARE_PAGES, REVIEWED_ON, ROWS, TOOL
 import { renderFragment } from '../../lib/markdown'
 import { breadcrumbLd, graph } from '../../lib/seo'
 
-const allTools: ToolId[] = ['klustr', 'lens', 'k9s', 'headlamp', 'dashboard']
+const allTools: ToolId[] = ['klustr', 'lens', 'k9s', 'headlamp']
 ---
 
 <CompareLayout
@@ -28,7 +28,7 @@ const allTools: ToolId[] = ['klustr', 'lens', 'k9s', 'headlamp', 'dashboard']
   <section class="mt-14">
     <h2 id="pages" class="display scroll-mt-24 text-2xl">{COMPARE_HEADINGS.pages}</h2>
     <p class="lede mt-3 max-w-[68ch]">{COMPARE_INDEX.pagesLede}</p>
-    <div class="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+    <div class="mt-6 grid gap-4 lg:grid-cols-3">
       {
         COMPARE_PAGES.map((page) => (
           <a href={`/compare/${page.slug}/`} class="sheet cap block no-underline hover:border-ink">
