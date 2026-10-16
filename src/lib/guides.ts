@@ -127,10 +127,14 @@ export async function loadGuide(slug: string): Promise<Guide> {
   return { ...meta, ...rendered }
 }
 
-// Fails the build when a guide is added to docs/guide without a card here,
-// so the site index never silently lags behind the repository.
+// Fails the build when a guide is added to docs/guide without a card here or
+// a line in docs/guide/README.md, so neither the site index nor the GitHub
+// one silently lags behind the repository.
 export async function assertGuidesIndexed(): Promise<void> {
   const files = (await readdir(GUIDE_DIR)).filter((f) => f.endsWith('.md') && f !== 'README.md')
   const missing = files.map((f) => f.replace(/\.md$/, '')).filter((slug) => !GUIDES.some((g) => g.slug === slug))
   if (missing.length) throw new Error(`guides missing from GUIDE_GROUPS: ${missing.join(', ')}`)
+  const readme = await readFile(path.join(GUIDE_DIR, 'README.md'), 'utf8')
+  const unlisted = GUIDES.filter((g) => !readme.includes(`](${g.slug}.md)`)).map((g) => g.slug)
+  if (unlisted.length) throw new Error(`guides missing from docs/guide/README.md: ${unlisted.join(', ')}`)
 }

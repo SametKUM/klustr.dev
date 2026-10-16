@@ -36,6 +36,8 @@ added over time.
 - [Gateway API](gateway-api.md) — Gateways, routes, and reading route status.
 - [Kyverno & policy reports](kyverno.md) — policies, exceptions, reports, and the
   violations behind them.
+- [Cilium](cilium.md) — network policies, endpoints, nodes, IP pools and BGP
+  configuration as Cilium reports them.
 - [Platform integrations](integrations.md) — cert-manager, Istio, Karpenter and
   KEDA.
 - [Custom Resources (CRDs)](custom-resources.md) — auto-discovery and the generic
