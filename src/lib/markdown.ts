@@ -1,4 +1,5 @@
 import { Marked, type Token, type Tokens } from 'marked'
+import { absoluteUrl } from './site'
 
 export type Heading = { depth: number; id: string; text: string }
 
@@ -120,6 +121,32 @@ export function renderInline(markdown: string): string {
     },
   })
   return marked.parseInline(markdown, { async: false })
+}
+
+// Markdown served to agents is read away from the site, so its links have to
+// stand alone: guide cross-links, site paths and in-page anchors (resolved
+// against the page's own path) become absolute URLs. Fenced code is left as
+// written.
+export function absoluteLinks(markdown: string, pagePath: string): string {
+  return markdown
+    .split(/^(```[\s\S]*?^```)/m)
+    .map((part, i) =>
+      i % 2 === 1
+        ? part
+        : part.replace(/\]\(([^)\s]+)\)/g, (_, href: string) => `](${absoluteHref(href, pagePath)})`),
+    )
+    .join('')
+}
+
+function absoluteHref(href: string, pagePath: string): string {
+  const target = href.startsWith('#') ? `${pagePath}${href}` : rewriteHref(href)
+  return target.startsWith('/') ? absoluteUrl(target) : target
+}
+
+// The link and image targets in a markdown document outside fenced code,
+// including links with a title that absoluteLinks leaves alone.
+export function linkTargets(markdown: string): string[] {
+  return [...markdown.replace(/^```[\s\S]*?^```/gm, '').matchAll(/\]\(\s*([^)\s]+)/g)].map((m) => m[1])
 }
 
 // Reads the text off the markdown tokens instead of stripping tags from
