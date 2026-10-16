@@ -11,12 +11,13 @@ import {
   type ToolId,
 } from '../data/compare'
 import { FAQ, FAQ_PAGE } from '../data/faq'
+import { FEATURE_LIST } from '../data/features'
 import { INSTALL_PAGE, INSTALL_PLATFORMS, INSTALL_REQUIREMENTS, INSTALL_UPDATE, INSTALL_VERIFY } from '../data/install'
-import { CHANGELOG_PAGE, changelogEntries } from './changelog'
+import { CHANGELOG_PAGE, changelogEntries, formatDate } from './changelog'
 import { latestRelease } from './github'
 import { DOCS_PAGE, GUIDES, GUIDE_GROUPS, loadGuideMarkdown } from './guides'
 import { absoluteLinks, linkTargets } from './markdown'
-import { absoluteUrl } from './site'
+import { REPO_URL, SITE, SITE_REPO_URL, absoluteUrl } from './site'
 
 // llms.txt (llmstxt.org) asks for a clean markdown version of every page an
 // agent might need, at the page URL with index.md appended when the URL has
@@ -191,4 +192,84 @@ async function changelogMarkdown(): Promise<string> {
     `> ${CHANGELOG_PAGE.lede}`,
     ...(entries.length === 0 ? [CHANGELOG_PAGE.unavailable] : [...releases, CHANGELOG_PAGE.older]),
   )
+}
+
+async function releaseLine(): Promise<string | undefined> {
+  const release = await latestRelease()
+  return release && `The latest release is ${release.tag}, published ${formatDate(release.publishedAt)}.`
+}
+
+export async function llmsTxt(): Promise<string> {
+  const md = (path: string) => absoluteUrl(markdownPath(path))
+  const docs = await Promise.all(
+    GUIDE_GROUPS.map(async (group) => {
+      const items = await Promise.all(
+        group.guides.map(async (g) => link(await guideTitle(g.slug), md(`/docs/${g.slug}/`), g.summary)),
+      )
+      return doc(`## Docs: ${group.name}`, list(items))
+    }),
+  )
+
+  return `${doc(
+    `# ${SITE.name}`,
+    `> ${SITE.description}`,
+    "Klustr is a desktop application, not a service and not an in-cluster component. It reads the user's kubeconfig and drives the standard Kubernetes API directly, the way kubectl does, so there is no agent, operator, CRD or sign-in. The backend is Go with client-go; the window is Wails with a React frontend.",
+    await releaseLine(),
+    `What it does:\n\n${list(FEATURE_LIST)}`,
+    `Every link below is the markdown version of a page on klustr.dev. Each of those pages serves it at its own URL plus \`index.md\` (${absoluteUrl('/docs/helm/')} is ${md('/docs/helm/')}) and points to it with \`<link rel="alternate" type="text/markdown">\`; links inside the documents go to the HTML pages. The install steps, every guide, the FAQ and the comparisons are also in one file at ${absoluteUrl('/llms-full.txt')}.`,
+    '## Pages',
+    list([
+      link(
+        'Install',
+        md('/install/'),
+        'Homebrew, the AUR package, the .deb, the tarballs, the Windows zip and building from source; updating, verifying a download and the requirements.',
+      ),
+      link('FAQ', md('/faq/'), 'What Klustr installs, which platforms it runs on, how it authenticates, telemetry and what it costs.'),
+      link('Documentation index', md('/docs/'), 'All task-focused guides, grouped.'),
+    ]),
+    ...docs,
+    '## Comparisons',
+    list([
+      link(
+        'All comparisons',
+        md('/compare/'),
+        `Klustr next to Lens, k9s, Headlamp and Kubernetes Dashboard, row by row, reviewed ${REVIEWED_ON}.`,
+      ),
+      ...COMPARE_PAGES.map((p) => link(p.heading, md(`/compare/${p.slug}/`), TOOLS[p.tool].summary)),
+    ]),
+    '## Optional',
+    list([
+      link('Changelog', md('/changelog/'), 'Release notes for the 20 most recent releases, newest first.'),
+      link('Full text', absoluteUrl('/llms-full.txt'), 'The install steps, every guide, the FAQ and the comparisons in one file.'),
+      link('Source repository', REPO_URL, 'Go backend, React frontend, Apache-2.0 licensed.'),
+      link('Site repository', SITE_REPO_URL, "The site's source, with the guides as markdown under docs/guide (CC-BY-4.0)."),
+    ]),
+  )}\n`
+}
+
+// The pages llms-full.txt carries in full. The docs index and the changelog
+// are left out: one only lists the guides that follow, the other changes with
+// every release and is linked from llms.txt instead.
+const FULL_TEXT_PATHS = [
+  '/install/',
+  ...GUIDES.map((g) => `/docs/${g.slug}/`),
+  '/faq/',
+  '/compare/',
+  ...COMPARE_PAGES.map((p) => `/compare/${p.slug}/`),
+]
+
+export async function llmsFullTxt(): Promise<string> {
+  const sections = await Promise.all(
+    FULL_TEXT_PATHS.map(async (path) =>
+      (await pageMarkdown(path)).trim().replace(/^(# .+)$/m, `$1\n\nSource: ${absoluteUrl(path)}`),
+    ),
+  )
+  const header = doc(
+    `# ${SITE.name} documentation`,
+    `> ${SITE.description}`,
+    `This file is the full text of the Klustr site: the install steps, every user guide in the order of the documentation index, the FAQ and the comparisons, each under its own H1 with the page it comes from. The short index, with a markdown link for every page, is at ${absoluteUrl('/llms.txt')}.`,
+    await releaseLine(),
+    `The guides are licensed [CC-BY-4.0](${SITE_REPO_URL}/blob/main/docs/guide/LICENSE); the install, FAQ and comparison text is part of the site's [Apache-2.0](${SITE_REPO_URL}/blob/main/LICENSE) source.`,
+  )
+  return `${[header, ...sections].join('\n\n---\n\n')}\n`
 }
