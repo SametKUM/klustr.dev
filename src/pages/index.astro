@@ -24,6 +24,7 @@ import FeatureTabs, { type Feature } from '../components/FeatureTabs.astro'
 import HeroSlider from '../components/HeroSlider.astro'
 import InstallTabs from '../components/InstallTabs.astro'
 import heroPoster from '../assets/hero-poster.png'
+import { CAPABILITY_CLIPS, DEMO_TITLE, clipById } from '../data/clips'
 import { REVIEWED_ON, ROWS } from '../data/compare'
 import { FEATURE_LIST } from '../data/features'
 import { SHOTS, shotBySlug } from '../data/shots'
@@ -366,14 +367,30 @@ const compareRows = [
     </div>
     <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {
-        capabilities.map(({ icon: Icon, title, body }) => (
-          <div class="sheet cap">
-            <h3>
-              <Icon size={18} /> {title}
-            </h3>
-            <p>{body}</p>
-          </div>
-        ))
+        capabilities.map(({ icon: Icon, title, body }) => {
+          const clip = clipById(CAPABILITY_CLIPS[title])
+          return (
+            <div class="sheet cap">
+              <h3>
+                <Icon size={18} /> {title}
+              </h3>
+              <p>{body}</p>
+              {clip && (
+                <button
+                  class="cap-watch"
+                  type="button"
+                  data-demo-open
+                  data-demo-src={clip.src}
+                  data-demo-poster={clip.poster}
+                  data-demo-title={clip.title}
+                >
+                  <Play size={13} />
+                  <span>Watch</span>
+                </button>
+              )}
+            </div>
+          )
+        })
       }
     </div>
   </section>
@@ -426,22 +443,44 @@ const compareRows = [
   <!-- Demo video -->
   <dialog id="demo" class="m-auto w-[min(96vw,1100px)] rounded-(--radius-sheet) border border-rule-strong bg-paper p-0 backdrop:bg-paper/90 backdrop:backdrop-blur-sm">
     <div class="flex items-center justify-between gap-3 border-b border-rule px-4 py-2">
-      <span class="font-mono text-sm text-ink-2">Live view across two contexts, captured from real clusters</span>
+      <span class="font-mono text-sm text-ink-2" data-demo-title>{DEMO_TITLE}</span>
       <button class="icon-btn" type="button" data-demo-close aria-label="Close">
         <X size={16} />
       </button>
     </div>
-    <video class="block w-full" controls preload="none" playsinline poster={poster.src} data-demo-video>
-      <source src="/hero.mp4" type="video/mp4" />
+    <video
+      class="block w-full"
+      controls
+      preload="none"
+      playsinline
+      poster={poster.src}
+      src="/hero.mp4"
+      data-demo-video
+      data-demo-default-poster={poster.src}
+    >
     </video>
   </dialog>
 
   <script>
     const dialog = document.getElementById('demo') as HTMLDialogElement | null
     const video = dialog?.querySelector<HTMLVideoElement>('[data-demo-video]')
-    document.querySelector('[data-demo-open]')?.addEventListener('click', () => {
-      dialog?.showModal()
-      void video?.play().catch(() => {})
+    const label = dialog?.querySelector<HTMLElement>('[data-demo-title]')
+    const defaults = { src: '/hero.mp4', poster: video?.dataset.demoDefaultPoster ?? '', title: label?.textContent ?? '' }
+    // The hero button plays the walk-through; a capability card's Watch button
+    // passes its own clip.
+    document.querySelectorAll<HTMLElement>('[data-demo-open]').forEach((button) => {
+      button.addEventListener('click', () => {
+        if (!dialog || !video) return
+        const src = button.dataset.demoSrc ?? defaults.src
+        if (video.getAttribute('src') !== src) {
+          video.src = src
+          video.poster = button.dataset.demoPoster ?? defaults.poster
+        }
+        video.loop = src !== defaults.src
+        if (label) label.textContent = button.dataset.demoTitle ?? defaults.title
+        dialog.showModal()
+        void video.play().catch(() => {})
+      })
     })
     dialog?.querySelector('[data-demo-close]')?.addEventListener('click', () => dialog.close())
     dialog?.addEventListener('click', (e) => {

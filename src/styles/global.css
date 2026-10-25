@@ -777,6 +777,22 @@
     line-height: 1.6;
     color: var(--ink-2);
   }
+  .cap-watch {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: 0.8rem;
+    padding: 0;
+    border: 0;
+    background: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--accent);
+    cursor: pointer;
+  }
+  .cap-watch:hover {
+    text-decoration: underline;
+  }
 
   /* ── Comparison table ─────────────────────────────────────────────── */
 
