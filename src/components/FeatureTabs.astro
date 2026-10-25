@@ -1,6 +1,7 @@
 ---
 import { Picture } from 'astro:assets'
 import { ArrowRight } from '@lucide/astro'
+import { clipById } from '../data/clips'
 import type { Shot } from '../data/shots'
 
 export type Feature = {
@@ -18,6 +19,7 @@ interface Props {
 }
 
 const { features } = Astro.props
+const clips = features.map((f) => clipById(f.id))
 ---
 
 <div class="wf" data-feature-tabs>
@@ -71,20 +73,37 @@ const { features } = Astro.props
           </div>
         </div>
         <figure class="wf-shot sheet ticks">
-          <Picture
-            src={f.shot.image}
-            alt={`Klustr ${f.shot.title} view in the ${f.shot.theme} theme. ${f.shot.caption}`}
-            widths={[640, 1200, 1800, 2560]}
-            sizes="(max-width: 1200px) 100vw, 1152px"
-            formats={['avif']}
-            fallbackFormat="webp"
-            loading="lazy"
-            decoding="async"
-            class="block h-auto w-full"
-          />
+          {clips[i] ? (
+            <video
+              class="block h-auto w-full"
+              width="1920"
+              height="1200"
+              muted
+              loop
+              playsinline
+              preload="none"
+              poster={clips[i].poster}
+              aria-label={`Klustr: ${clips[i].title}, recorded in the ${clips[i].theme} theme`}
+              data-wf-clip
+            >
+              <source src={clips[i].src} type="video/mp4" />
+            </video>
+          ) : (
+            <Picture
+              src={f.shot.image}
+              alt={`Klustr ${f.shot.title} view in the ${f.shot.theme} theme. ${f.shot.caption}`}
+              widths={[640, 1200, 1800, 2560]}
+              sizes="(max-width: 1200px) 100vw, 1152px"
+              formats={['avif']}
+              fallbackFormat="webp"
+              loading="lazy"
+              decoding="async"
+              class="block h-auto w-full"
+            />
+          )}
           <figcaption class="wf-caption">
-            <span>{f.shot.title}</span>
-            <span class="font-mono">{f.shot.theme}</span>
+            <span>{clips[i]?.title ?? f.shot.title}</span>
+            <span class="font-mono">{clips[i]?.theme ?? f.shot.theme}</span>
           </figcaption>
         </figure>
       </div>
@@ -96,6 +115,32 @@ const { features } = Astro.props
   document.querySelectorAll<HTMLElement>('[data-feature-tabs]').forEach((root) => {
     const tabs = [...root.querySelectorAll<HTMLButtonElement>('[data-wf-tab]')]
     const panels = [...root.querySelectorAll<HTMLElement>('[data-wf-panel]')]
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    let inView = false
+
+    // Only the open tab's clip plays, and only while the section is on screen.
+    // With reduced motion the clips wait for the visitor to press play.
+    function syncClips() {
+      panels.forEach((panel) => {
+        const video = panel.querySelector<HTMLVideoElement>('[data-wf-clip]')
+        if (!video) return
+        if (reduceMotion) {
+          video.controls = true
+          if (panel.hidden) video.pause()
+          return
+        }
+        if (inView && !panel.hidden) void video.play().catch(() => {})
+        else video.pause()
+      })
+    }
+
+    new IntersectionObserver(
+      ([entry]) => {
+        inView = entry.isIntersecting
+        syncClips()
+      },
+      { threshold: 0.25 },
+    ).observe(root)
 
     function activate(id: string, focus = false) {
       tabs.forEach((tab) => {
@@ -107,6 +152,7 @@ const { features } = Astro.props
       panels.forEach((panel) => {
         panel.hidden = panel.dataset.wfPanel !== id
       })
+      syncClips()
     }
 
     tabs.forEach((tab, i) => {
