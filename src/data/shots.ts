@@ -68,7 +68,7 @@ export const SHOTS: Shot[] = [
     title: 'Multi-pod logs',
     theme: 'Dracula Light',
     caption:
-      'One stream across every pod of a Deployment, a color per pod, filtered live with the regex ERROR|WARN. Follow, pause, clear and save without leaving the dialog.',
+      'One stream across every pod of a Deployment, a color per pod, filtered live with the regex ERROR|WARN. Follow, pause, clear and save without leaving the inspector.',
     guide: { href: '/docs/workloads-and-debugging/', label: 'Workloads and debugging' },
   },
   {

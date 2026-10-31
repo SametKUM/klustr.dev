@@ -41,11 +41,40 @@ action (apply, delete, scale, restart, Helm install/upgrade, sync, …) is block
 for that context. Use it to browse a production cluster with confidence that no
 button can change anything.
 
+## Reading a resource
+
+Click a row and the resource opens in the **inspector** beside the list. The list
+stays live and keeps its filter, scroll position and page, and the row you are
+reading stays highlighted, so you never lose your place.
+
+- Drag the divider to resize the inspector. Double-click it, or focus it and press
+  `Enter`, to go back to the default width. The expand button in the inspector
+  header fills the workspace with it, and a window too narrow for both panes shows
+  it at full width.
+- Beside a narrow inspector the list switches to compact columns. Your saved
+  column settings are left as they are.
+- The arrows in the inspector header, or `Alt+↑` / `Alt+↓`, step through the
+  current filtered and sorted results, across pages. Moving to another resource
+  of the same kind keeps the tab you were reading.
+- Links inside the inspector open the referenced resource in place; the back
+  arrow returns to the previous one and to the tab you were on.
+- `F6` moves focus between the list and the inspector, and `Esc` closes it.
+- Navigating away from an unapplied YAML edit asks you to **Keep editing** or
+  **Discard changes**.
+
+Log, exec and editor sessions keep running while you resize or expand the
+inspector.
+
 ## Finding things fast
 
-- `⌘P` — command palette: fuzzy-search resources by name across the current view.
+- `⌘K` — command palette: jump to any view or custom resource kind, toggle
+  contexts, or open the terminal.
+- `⌘P` — search pods by name.
 - `⌘N` — namespace search.
+- `/` — focus the filter of the current list.
 - `?` — keyboard shortcut cheatsheet.
+
+On Linux and Windows, use `Ctrl` in place of `⌘`.
 
 ## Next steps
 

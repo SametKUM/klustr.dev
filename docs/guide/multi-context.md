@@ -12,8 +12,8 @@ you connect:
 - Every list view fans out across all selected contexts and adds a **Context**
   column so you can tell rows apart.
 - Cluster overviews aggregate CPU / memory / pod counts across the whole set.
-- Detail dialogs, logs, exec and the rest operate on the specific context of the
-  row you opened.
+- Resource details, logs, exec and the rest operate on the specific context of
+  the row you opened.
 
 A single selected context behaves exactly as before — aggregation kicks in only at
 two or more.

@@ -14,7 +14,7 @@ again. A brand-new CRD installed while you're connected shows up without a resta
 ## Browsing and editing
 
 - The generic CR list shows the objects for that kind.
-- The detail dialog shows **YAML by default**. A CR that one of the integrations
+- The inspector shows **YAML by default**. A CR that one of the integrations
   below covers opens on that integration's overview instead, even from the
   generic list.
 - YAML edit, delete and (where applicable) scale work through the dynamic client,
