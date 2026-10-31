@@ -11,10 +11,18 @@ Open a pod (or a workload) and switch to the **Logs** tab for a streaming,
 stern-style view:
 
 - Multi-pod streaming with a distinct ANSI color per pod.
-- Follow mode, log-level highlighting, regex filtering.
-- On a pod, a **Tail** picker starts the stream from the last 200, 1,000 or
-  10,000 lines, or from the whole log.
-- Save the current buffer to a file.
+- Follow mode, log-level highlighting, and a filter with a regex toggle.
+- A line-count picker sets how far back the stream starts. On a pod it offers the
+  last 200, 1,000 or 10,000 lines, or the whole log. On a Deployment, StatefulSet
+  or DaemonSet it offers 50, 200 or 1,000 lines per container, starting at 50:
+  the limit applies to every container of every matched pod, so it stays small.
+  Changing it restarts the stream.
+- On a pod, **Previous** shows the log of the container's last terminated
+  instance, the one `kubectl logs --previous` reads, for a container that has
+  restarted.
+- **Pause** holds the view while lines keep buffering, **Wrap** toggles line
+  wrapping, and the overflow menu saves the filtered lines to a file or clears
+  the view.
 
 In aggregated mode the stream spans the pods across every active context.
 
