@@ -29,10 +29,37 @@ Shown when the `cert-manager.io` CRDs are present.
 
 ## Istio
 
-Shown when the `networking.istio.io` CRDs are present.
+Shown when Istio's `networking.istio.io` and `security.istio.io` CRDs are
+present.
 
-- **VirtualServices**, **DestinationRules** and **PeerAuthentications**,
-  watch-backed.
+- **VirtualServices** — hosts, gateways and every HTTP, TLS and TCP route as a
+  match with weighted destinations.
+- **DestinationRules** — host, TLS mode, load balancer and subsets.
+- **Gateways** — servers with their ports, hosts and TLS credential, the gateway
+  proxy pods the selector matches, and the VirtualServices bound to the gateway.
+- **ServiceEntries** — hosts, addresses, ports, location, resolution, endpoints
+  and the namespaces the entry is exported to.
+- **Sidecars** — the workloads a Sidecar applies to, its ingress listeners,
+  egress hosts and outbound traffic policy.
+- **AuthorizationPolicies** — action, rules and the workloads they select. An
+  `ALLOW` policy without rules reads **Allows no requests (default deny)**.
+- **RequestAuthentications** — JWT issuers, audiences and keys, where the token
+  is read from and whether it is forwarded, and the workloads they select.
+- **PeerAuthentications** — mTLS mode, port-level overrides and selector.
+
+Links connect the mesh config to what it routes:
+
+- A VirtualService's hosts and destinations and a DestinationRule's host open
+  their Service. Short names resolve the way Istio resolves them, relative to the
+  resource's namespace.
+- Each DestinationRule subset lists the pods its labels select.
+- A VirtualService's gateways open the Istio Gateway they name.
+- AuthorizationPolicies, RequestAuthentications and Sidecars list the pods they
+  select. A selector policy in Istio's root namespace applies **in all
+  namespaces**.
+
+The links follow Services and Pods live, so a subset's pods update during a
+rollout or scale.
 
 ## Karpenter
 
@@ -46,10 +73,56 @@ Shown when the `karpenter.sh` CRDs are present.
   security groups and AMIs the selector terms resolved to, each AMI with its
   requirements. A NodePool's or NodeClaim's node class opens its EC2NodeClass.
 
+### Why a node is not disrupted
+
+Karpenter-managed nodes and NodeClaims have a **Disruption** tab that answers
+"why isn't Karpenter removing this node?". It lists what holds the node right now:
+
+- `karpenter.sh/do-not-disrupt` on the node, its NodeClaim or one of its pods,
+  including the duration form;
+- PodDisruptionBudgets that allow no eviction, or that overlap on one pod;
+- the NodePool's disruption budgets that are active now, with the nodes already
+  being disrupted subtracted;
+- `consolidateAfter` set to `Never` or still cooling down, a `WhenEmpty` policy
+  on a node that still runs pods, and a NodeClaim that is not initialized.
+
+Each blocker names the disruption reasons it holds back, so the headline can say,
+for example, that the node will not be consolidated but can still be replaced
+when it drifts. The tab also shows the NodePool's consolidation and expiry
+settings, its budgets with their schedules (in UTC), and Karpenter's own
+disruption events for the node, its NodeClaim and its NodePool.
+
+When your access does not include Pods or PodDisruptionBudgets in every
+namespace, the tab says it cannot tell rather than reporting that nothing blocks
+the node. On a cluster running Karpenter, every node has the tab; one Karpenter
+does not manage says so.
+
 ## KEDA
 
-KEDA has **no dedicated sidebar group** — its ScaledObjects stay in the generic
-CRD browser. What Klustr adds is enrichment of the HPAs KEDA manages.
+Shown when the `keda.sh` CRDs are present.
+
+- **ScaledObjects** — target workload, replica range, triggers, and the
+  **Ready**, **Active**, **Fallback** and **Paused** state. A one-direction pause
+  (`paused-scale-in` or `paused-scale-out`) shows as such. The detail lists each
+  trigger with its metric and authentication, the scaling settings (polling
+  interval, cooldowns, fallback, the formula that combines several scalers), and
+  links to the HPA KEDA created.
+- **ScaledJobs** — triggers, scaling strategy and the job template, with a
+  **Jobs** tab listing the Jobs KEDA started.
+- **TriggerAuthentications** and **ClusterTriggerAuthentications** — the
+  sources each one reads credentials from (Secrets, ConfigMaps, environment
+  variables, bound service account tokens, pod identity, HashiCorp Vault, Azure
+  Key Vault, AWS Secrets Manager, GCP Secret Manager) and the ScaledObjects and
+  ScaledJobs that use it. Klustr never reads a secret value; a Vault token
+  written into the spec shows as **token in spec**.
+
+**Pause** on a ScaledObject either keeps the current replica count or scales to
+a number you give and holds it there, through KEDA's
+`autoscaling.keda.sh/paused` and `paused-replicas` annotations. ScaledJobs pause
+and resume as a whole. **Resume** clears every pause annotation, the
+one-direction ones included.
+
+### KEDA-managed HPAs
 
 A KEDA-managed HPA is a vanilla HorizontalPodAutoscaler whose metrics are all
 `External` and named `s0-…`, `s1-…` — without help they render as a wall of
@@ -57,5 +130,5 @@ identical "external" rows. Klustr maps each back to its ScaledObject trigger and
 relabels it with the real trigger type plus the metadata that predicts scaling
 (Prometheus metric + threshold, cron schedule, Kafka topic + lag, and so on).
 
-Find it under **Config → HorizontalPodAutoscalers**: open a KEDA-owned HPA and
-the Targets read as real triggers instead of opaque external metrics.
+Open a KEDA-owned HPA under **Config → HorizontalPodAutoscalers** and the
+Targets read as real triggers instead of opaque external metrics.
