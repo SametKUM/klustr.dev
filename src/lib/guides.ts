@@ -74,12 +74,12 @@ export const GUIDE_GROUPS: { name: string; guides: GuideMeta[] }[] = [
       {
         slug: 'gitops',
         group: 'working with resources',
-        summary: 'Argo CD and Flux: sync, refresh, reconcile and suspend through the Kubernetes API.',
+        summary: 'Argo CD and Flux through the Kubernetes API, and which tool manages a resource before you edit it.',
       },
       {
         slug: 'tekton',
         group: 'working with resources',
-        summary: 'PipelineRuns with their task table, TaskRun step logs, and cancel and rerun without tkn.',
+        summary: 'PipelineRuns with their task table and graph, step logs, start, cancel and rerun, and Triggers.',
       },
       {
         slug: 'gateway-api',
@@ -89,7 +89,7 @@ export const GUIDE_GROUPS: { name: string; guides: GuideMeta[] }[] = [
       {
         slug: 'kyverno',
         group: 'working with resources',
-        summary: 'Kyverno policies and exceptions, policy reports, and which resources each policy flags.',
+        summary: 'Kyverno policies, every CEL policy kind, exceptions, policy reports and which resources each policy flags.',
       },
       {
         slug: 'cilium',
@@ -99,7 +99,7 @@ export const GUIDE_GROUPS: { name: string; guides: GuideMeta[] }[] = [
       {
         slug: 'integrations',
         group: 'working with resources',
-        summary: 'cert-manager, Istio, Karpenter and KEDA views that appear when their CRDs are present.',
+        summary: 'cert-manager, Istio, Karpenter and KEDA views, Karpenter’s disruption blockers and KEDA pause.',
       },
       {
         slug: 'custom-resources',

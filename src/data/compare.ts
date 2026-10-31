@@ -184,7 +184,7 @@ export const ROWS: Row[] = [
     group: 'platform',
     label: 'Tekton',
     cells: {
-      klustr: { text: 'Typed views', tone: 'yes', sub: 'PipelineRun task table, step logs, cancel and rerun; no tkn' },
+      klustr: { text: 'Typed views', tone: 'yes', sub: 'PipelineRun task table and graph, step logs, start, cancel and rerun, Triggers; no tkn' },
       lens: { text: 'Generic CRDs', tone: 'mid' },
       k9s: { text: 'Generic CRDs', tone: 'mid' },
       headlamp: { text: 'Generic CRDs', tone: 'mid' },
@@ -204,7 +204,7 @@ export const ROWS: Row[] = [
     group: 'platform',
     label: 'Istio',
     cells: {
-      klustr: { text: 'Typed views', tone: 'yes', sub: 'VirtualServices, DestinationRules, PeerAuthentications' },
+      klustr: { text: 'Typed views', tone: 'yes', sub: 'Eight networking and security kinds, hosts linked to Services and subsets to pods' },
       lens: { text: 'Generic CRDs', tone: 'mid', sub: 'A community extension draws them in a traffic graph' },
       k9s: { text: 'Generic CRDs', tone: 'mid' },
       headlamp: { text: 'Via plugin', tone: 'mid', sub: 'Community Istio plugins' },
@@ -234,7 +234,7 @@ export const ROWS: Row[] = [
     group: 'platform',
     label: 'Kyverno',
     cells: {
-      klustr: { text: 'Typed views', tone: 'yes', sub: 'Policies, exceptions, policy reports and each policy’s violations' },
+      klustr: { text: 'Typed views', tone: 'yes', sub: 'Policies, every CEL policy kind, exceptions, policy reports and each policy’s violations' },
       lens: { text: 'Via extension', tone: 'mid', sub: 'Community extension; installing extensions needs a paid plan' },
       k9s: { text: 'Generic CRDs', tone: 'mid' },
       headlamp: { text: 'Via plugin', tone: 'mid', sub: 'Official plugin with policy reports' },
@@ -244,7 +244,7 @@ export const ROWS: Row[] = [
     group: 'platform',
     label: 'Karpenter',
     cells: {
-      klustr: { text: 'Typed views', tone: 'yes', sub: 'NodePools against their limits, NodeClaims, EC2NodeClasses' },
+      klustr: { text: 'Typed views', tone: 'yes', sub: 'NodePools against their limits, NodeClaims, EC2NodeClasses, disruption blockers per node' },
       lens: { text: 'Generic CRDs', tone: 'mid' },
       k9s: { text: 'Community plugin', tone: 'mid', sub: 'Jumps between NodePools, NodeClaims and Nodes' },
       headlamp: { text: 'Via plugin', tone: 'mid', sub: 'Official plugin, marked alpha' },
@@ -254,7 +254,7 @@ export const ROWS: Row[] = [
     group: 'platform',
     label: 'KEDA',
     cells: {
-      klustr: { text: 'Triggers on the HPA', tone: 'mid', sub: 'ScaledObjects stay in the generic CRD browser' },
+      klustr: { text: 'Typed views', tone: 'yes', sub: 'ScaledObjects, ScaledJobs and authentications, pause and resume, triggers on the HPA' },
       lens: { text: 'Generic CRDs', tone: 'mid' },
       k9s: { text: 'Community plugin', tone: 'mid', sub: 'Pause and resume ScaledObjects' },
       headlamp: { text: 'Via plugin', tone: 'mid', sub: 'Official KEDA plugin' },
@@ -321,7 +321,7 @@ export const COMPARE_PAGES: ComparePage[] = [
       '**No sign-in.** Lens Desktop needs a Lens ID to activate, and the free Personal plan is limited to education and to companies under a revenue threshold. Klustr has no account, no activation and no plan tiers. It is Apache-2.0 licensed and free for any use.',
       '**Nothing installed in the cluster.** Both tools read your kubeconfig. Klustr never asks to deploy anything either; the single opt-in exception is a one-click metrics-server install that Klustr can also remove.',
       '**Several clusters in one table.** Lens shows one cluster per view. Klustr drives two or more contexts as one virtual cluster with a Context column, named groups and color tags, so a fleet or a prod-versus-staging comparison is one screen.',
-      '**Platform tooling without a plan, CLIs or extensions.** Argo CD, Flux, Tekton, cert-manager, Istio, Cilium, Kyverno and Karpenter get typed views out of the box, driven through the Kubernetes API. Lens builds in Gateway API for everyone and Argo CD and Flux on its paid plans; the others are generic custom resources there or come from community extensions, which also need a paid plan to install.',
+      '**Platform tooling without a plan, CLIs or extensions.** Argo CD, Flux, Tekton, cert-manager, Istio, Cilium, Kyverno, Karpenter and KEDA get typed views out of the box, driven through the Kubernetes API. Lens builds in Gateway API for everyone and Argo CD and Flux on its paid plans; the others are generic custom resources there or come from community extensions, which also need a paid plan to install.',
       '**Access Review.** Klustr answers “what can this ServiceAccount do in this namespace?” with a live permission matrix and the binding and role chain behind every entry. Lens lists roles and bindings.',
       '**Native webview instead of Electron.** Klustr is a Go binary that renders through the operating system’s webview via Wails, so there is no bundled Chromium. The macOS archive is about 22 MB.',
     ],
@@ -376,7 +376,7 @@ export const COMPARE_PAGES: ComparePage[] = [
     different: [
       '**Never runs in the cluster.** Headlamp can be deployed as an in-cluster web UI or run as a desktop app. Klustr only runs on your machine and installs nothing in the cluster; there is no deployment to expose, upgrade or secure.',
       '**Helm, Argo CD and Flux without plugins.** Headlamp covers them through official plugins, the Argo CD one still in alpha. Klustr ships Helm v3 with a dry-run diff, Argo CD sync and refresh, and Flux reconcile and suspend, with no plugins or CLIs.',
-      '**Tekton, Cilium and the other platform tools built in.** Headlamp has no Tekton or Cilium plugin, and covers cert-manager, Kyverno and Karpenter through official plugins and Istio through community ones. Klustr ships typed views for all of them, including a PipelineRun task table with step logs, the full certificate issuance chain with one-click renew, and Cilium policies as rule tables.',
+      '**Tekton, Cilium and the other platform tools built in.** Headlamp has no Tekton or Cilium plugin, and covers cert-manager, Kyverno, Karpenter and KEDA through official plugins and Istio through community ones. Klustr ships typed views for all of them, including a PipelineRun task table with step logs, the full certificate issuance chain with one-click renew, and Cilium policies as rule tables.',
       '**Access Review.** Headlamp lists roles and bindings. Klustr computes a subject’s effective permissions as a matrix with the binding chain behind every entry.',
       '**Aggregated rows, not side-by-side panes.** Both tools support several clusters. Headlamp compares clusters side by side; Klustr merges them into one table with a Context column so a fleet reads as one cluster.',
       '**Operations from the desktop.** A local terminal drawer bound to the active context, a root node shell, cordon and PDB-aware drain, and ephemeral debug containers for shell-less images.',
@@ -384,7 +384,6 @@ export const COMPARE_PAGES: ComparePage[] = [
     stronger: [
       '**In-cluster mode for a team.** Deploy Headlamp once with OIDC and every teammate gets a browser UI without installing anything locally.',
       '**Plugin ecosystem and resource map.** Headlamp has a documented plugin API and a resource relationship map.',
-      '**KEDA.** Headlamp’s official KEDA plugin lists and manages KEDA resources. Klustr maps KEDA triggers onto the HPAs they drive and leaves ScaledObjects in the generic CRD browser.',
       '**CNCF governance.** Headlamp is a Kubernetes SIG UI project with community governance, and the UI the archived Kubernetes Dashboard points its users to. Klustr is a single-maintainer open-source project.',
     ],
     verdict:
