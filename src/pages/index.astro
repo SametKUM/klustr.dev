@@ -110,10 +110,10 @@ const features: Feature[] = [
   {
     id: 'flux',
     eyebrow: 'flux cd',
-    heading: 'Flux CD: reconcile and suspend, nine kinds.',
-    body: 'Kustomizations, HelmReleases, Git, Helm and OCI repositories, Buckets, Providers, Alerts and Receivers, each with conditions, source and applied revision up front. Reconcile and Suspend set the standard Flux annotations, so a failed Kustomization is fixed from the same screen that shows why it failed.',
+    heading: 'Flux CD: reconcile and suspend, twelve kinds.',
+    body: 'Kustomizations, HelmReleases, Git, Helm and OCI repositories, Buckets, Providers, Alerts and Receivers, each with conditions, source and applied revision up front. Image automation adds the tags an ImageRepository scanned, the image an ImagePolicy picked and the last commit an ImageUpdateAutomation pushed. Reconcile and Suspend set the standard Flux annotations, so a failed Kustomization is fixed from the same screen that shows why it failed.',
     chips: [
-      { value: '9', label: 'toolkit kinds' },
+      { value: '12', label: 'toolkit kinds, image automation included' },
       { value: 'Reconcile', label: 'the standard annotation' },
       { value: 'Suspend', label: 'and resume' },
     ],
@@ -188,12 +188,12 @@ const features: Feature[] = [
   {
     id: 'karpenter',
     eyebrow: 'karpenter',
-    heading: 'Karpenter: node pools and claims, live.',
-    body: 'NodePools with weight, node class, consolidation policy and CPU and memory against their limits. NodeClaims with node, instance type, capacity type, zone and the Launched, Registered and Initialized steps, so a claim stuck before registration stands out. The group appears when the karpenter.sh CRDs are present.',
+    heading: 'Karpenter: node pools, claims and node classes, live.',
+    body: 'NodePools with weight, node class, consolidation policy and CPU and memory against their limits. NodeClaims with node, instance type, capacity type, zone and the Launched, Registered and Initialized steps, so a claim stuck before registration stands out. On AWS, EC2NodeClasses show the subnets, security groups and AMIs their selector terms resolved to, and a pool or claim opens its node class.',
     chips: [
       { value: 'Limits', label: 'CPU and memory against used' },
       { value: 'Lifecycle', label: 'Launched to Initialized' },
-      { value: 'Spot', label: 'or on-demand, per claim' },
+      { value: 'EC2NodeClass', label: 'subnets, security groups, AMIs' },
     ],
     shot: shotBySlug('karpenter-nodeclaims'),
     link: { href: '/docs/integrations/', label: 'Platform integrations' },
@@ -215,7 +215,7 @@ const features: Feature[] = [
 
 const stats = [
   { value: '62', label: 'resource kinds with YAML edit, delete and scale' },
-  { value: '10', label: 'platform integrations with typed views' },
+  { value: '11', label: 'platform integrations with typed views' },
   { value: '13', label: 'themes, six light and seven dark' },
   { value: '0', label: 'components installed in the cluster' },
   { value: '22 MB', label: 'macOS download, signed and notarized' },
