@@ -9,7 +9,7 @@ export const FEATURE_LIST = [
   'Custom Resource Definitions auto-discovered and grouped by API group',
   'Helm v3 install, upgrade, rollback and uninstall with a dry-run diff first',
   'Argo CD sync, refresh, rollback and delete through the Kubernetes API',
-  'Flux CD reconcile, suspend and resume for Kustomizations, HelmReleases and sources',
+  'Flux CD reconcile, suspend and resume for Kustomizations, HelmReleases, sources and image automation',
   'Tekton PipelineRuns with their task table, step logs, cancel and rerun',
   'Gateway API typed views with listener tables, rule matrices and RouteParentStatus',
   'cert-manager certificates with the full issuance chain and one-click renew',
