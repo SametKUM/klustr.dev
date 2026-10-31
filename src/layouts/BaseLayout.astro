@@ -3,7 +3,7 @@ import '../styles/global.css'
 import { ArrowUp } from '@lucide/astro'
 import Nav from '../components/Nav.astro'
 import Footer from '../components/Footer.astro'
-import { SITE, absoluteUrl, clampDescription } from '../lib/site'
+import { SITE, UMAMI, absoluteUrl, clampDescription } from '../lib/site'
 import { MARKDOWN_PATHS, markdownPath } from '../lib/llms'
 import { serializeLd, type JsonLd } from '../lib/seo'
 
@@ -40,6 +40,7 @@ const description = clampDescription(rawDescription)
 const ogImageUrl = absoluteUrl(ogImage)
 const ldBlocks = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : []
 const markdownUrl = MARKDOWN_PATHS.has(path) ? absoluteUrl(markdownPath(path)) : undefined
+const siteHost = new URL(SITE.url).hostname
 ---
 
 <!doctype html>
@@ -92,6 +93,16 @@ const markdownUrl = MARKDOWN_PATHS.has(path) ? absoluteUrl(markdownPath(path)) :
     </script>
 
     {ldBlocks.map((block) => <script type="application/ld+json" set:html={serializeLd(block)} />)}
+
+    <!-- data-domains keeps localhost, the dev server and the local container out of the counts. -->
+    <script
+      is:inline
+      defer
+      src={UMAMI.scriptUrl}
+      data-website-id={UMAMI.websiteId}
+      data-domains={siteHost}
+      data-do-not-track="true"
+      data-performance="true"></script>
   </head>
   <body>
     <Nav />
@@ -105,11 +116,6 @@ const markdownUrl = MARKDOWN_PATHS.has(path) ? absoluteUrl(markdownPath(path)) :
     </button>
 
     <script>
-      import * as Swetrix from 'swetrix'
-
-      Swetrix.init('DaI17c1xdlkD', { respectDNT: true })
-      Swetrix.trackViews()
-
       const nav = document.getElementById('nav')
       const toTop = document.getElementById('to-top')
       const onScroll = () => {

@@ -16,6 +16,13 @@ export const SITE = {
   license: 'Apache-2.0',
 } as const
 
+// Self-hosted Umami. This host serves only the tracker and its beacon, and both
+// paths are renamed server-side so ad blockers don't match them.
+export const UMAMI = {
+  scriptUrl: 'https://insights.klustr.dev/i.js',
+  websiteId: '7a6984a2-4e00-4032-a245-c898be7276bb',
+} as const
+
 export const REPO_URL = `https://github.com/${SITE.repo}`
 export const SITE_REPO_URL = `https://github.com/${SITE.siteRepo}`
 export const RELEASES_URL = `${REPO_URL}/releases`
