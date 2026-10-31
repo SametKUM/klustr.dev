@@ -1,17 +1,22 @@
 ---
+import type { InstallMethod } from '../data/install'
+
 interface Props {
   html: string
+  method: InstallMethod
   class?: string
 }
 
-const { html, class: className = '' } = Astro.props
+const { html, method, class: className = '' } = Astro.props
 ---
 
-<div class:list={['install-block', className]}>
+<div class:list={['install-block', className]} data-method={method}>
   <pre class="cmd" set:html={html} />
 </div>
 
 <script>
+  import { track } from '../lib/analytics'
+
   // Each command block is split into one row per command with its own copy
   // button. Sequenced installs (the .deb flow) must run one step at a time, so
   // a single block-level copy would be misleading. A prompt line ("$ " or
@@ -50,7 +55,7 @@ const { html, class: className = '' } = Astro.props
     return out
   }
 
-  function makeCopyButton(text: string): HTMLButtonElement {
+  function makeCopyButton(text: string, onCopied: () => void): HTMLButtonElement {
     const btn = document.createElement('button')
     btn.type = 'button'
     btn.className = 'cmd-copy'
@@ -61,6 +66,7 @@ const { html, class: className = '' } = Astro.props
         () => {
           btn.classList.add('copied')
           window.setTimeout(() => btn.classList.remove('copied'), 1600)
+          onCopied()
         },
         () => {},
       )
@@ -69,6 +75,8 @@ const { html, class: className = '' } = Astro.props
   }
 
   function enhance(pre: HTMLElement) {
+    const method = pre.closest<HTMLElement>('[data-method]')?.dataset.method ?? 'unknown'
+    let step = 0
     const list = document.createElement('div')
     list.className = 'cmd-list'
     for (const cmd of splitCommands(pre.innerHTML)) {
@@ -87,7 +95,8 @@ const { html, class: className = '' } = Astro.props
           .replace(/^(?:\$|PS>)\s/, '')
           .replace(/[ \t]+$/gm, '')
           .trim()
-        row.appendChild(makeCopyButton(text))
+        const n = ++step
+        row.appendChild(makeCopyButton(text, () => track('install-copy', { method, step: n })))
       }
       list.appendChild(row)
     }

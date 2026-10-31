@@ -50,7 +50,7 @@ const jsonLd = graph([
             ) : 'lead' in step ? (
               <p class="mb-2 text-sm text-ink-2" set:html={renderInline(step.lead)} />
             ) : 'command' in step ? (
-              <CommandBlock html={step.command} />
+              <CommandBlock html={step.command} method={step.method} />
             ) : (
               <p class="mt-3 text-sm text-ink-2" set:html={renderInline(step.note)} />
             ),
@@ -67,7 +67,7 @@ const jsonLd = graph([
           INSTALL_UPDATE.channels.map((channel) => (
             <div>
               <p class="eyebrow mb-2">{channel.label.toLowerCase()}</p>
-              <CommandBlock html={channel.command} />
+              <CommandBlock html={channel.command} method={channel.method} />
             </div>
           ))
         }
@@ -79,7 +79,7 @@ const jsonLd = graph([
       <h2 class="display text-2xl">{INSTALL_VERIFY.title}</h2>
       <p class="mt-2 text-sm text-ink-2" set:html={renderInline(INSTALL_VERIFY.intro)} />
       <div class="mt-4">
-        <CommandBlock html={INSTALL_VERIFY.command} />
+        <CommandBlock html={INSTALL_VERIFY.command} method={INSTALL_VERIFY.method} />
       </div>
     </section>
 

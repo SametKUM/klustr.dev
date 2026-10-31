@@ -116,6 +116,10 @@ const siteHost = new URL(SITE.url).hostname
     </button>
 
     <script>
+      import { trackLinks } from '../lib/analytics'
+
+      trackLinks()
+
       const nav = document.getElementById('nav')
       const toTop = document.getElementById('to-top')
       const onScroll = () => {

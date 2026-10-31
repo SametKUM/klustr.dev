@@ -48,13 +48,15 @@ const { group, version, detectOs = false, class: className = '' } = Astro.props
         data-panel={tab.id}
         hidden={i !== 0}
       >
-        <CommandBlock html={tab.html} class="border-0 bg-transparent p-0" />
+        <CommandBlock html={tab.html} method={tab.method} class="border-0 bg-transparent p-0" />
       </div>
     ))
   }
 </div>
 
 <script>
+  import { track } from '../lib/analytics'
+
   function selectTab(group: HTMLElement, name: string) {
     group.querySelectorAll<HTMLElement>('[data-tab]').forEach((t) => {
       t.setAttribute('aria-selected', String(t.dataset.tab === name))
@@ -73,9 +75,15 @@ const { group, version, detectOs = false, class: className = '' } = Astro.props
   }
 
   document.querySelectorAll<HTMLElement>('[data-tabs]').forEach((group) => {
+    const detected = 'detectOs' in group.dataset ? detectTab() : undefined
     group.querySelectorAll<HTMLElement>('[data-tab]').forEach((tab) => {
-      tab.addEventListener('click', () => selectTab(group, tab.dataset.tab ?? ''))
+      tab.addEventListener('click', () => {
+        if (tab.getAttribute('aria-selected') === 'true') return
+        const name = tab.dataset.tab ?? ''
+        selectTab(group, name)
+        track('install-tab', { tab: name, detected: detected ?? 'off' })
+      })
     })
-    if ('detectOs' in group.dataset) selectTab(group, detectTab())
+    if (detected) selectTab(group, detected)
   })
 </script>

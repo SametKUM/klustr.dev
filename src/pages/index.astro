@@ -279,7 +279,7 @@ const compareRows = [
 
 <BaseLayout title={SITE.title} bareTitle description={SITE.metaDescription} path="/" jsonLd={jsonLd}>
   <!-- Hero -->
-  <section class="mx-auto max-w-6xl px-5 pb-10 pt-10 md:pt-14">
+  <section class="mx-auto max-w-6xl px-5 pb-10 pt-10 md:pt-14" data-analytics-placement="hero">
     <div class="mx-auto max-w-5xl text-center">
       <p class="eyebrow rise">kubernetes desktop gui for macOS, Linux and Windows</p>
       <h1 class="display rise rise-2 mt-4 text-[2.25rem] sm:text-5xl lg:text-[3.25rem]">
@@ -380,6 +380,7 @@ const compareRows = [
                   class="cap-watch"
                   type="button"
                   data-demo-open
+                  data-demo-clip={clip.id}
                   data-demo-src={clip.src}
                   data-demo-poster={clip.poster}
                   data-demo-title={clip.title}
@@ -421,7 +422,7 @@ const compareRows = [
   </section>
 
   <!-- Final call -->
-  <section class="border-t border-rule py-16">
+  <section class="border-t border-rule py-16" data-analytics-placement="cta">
     <div class="mx-auto max-w-2xl px-5 text-center">
       <h2 class="display text-3xl sm:text-4xl">Point it at a context.</h2>
       <p class="lede mt-4">One binary on your machine. Nothing in the cluster. Every context in your kubeconfig.</p>
@@ -462,6 +463,8 @@ const compareRows = [
   </dialog>
 
   <script>
+    import { track } from '../lib/analytics'
+
     const dialog = document.getElementById('demo') as HTMLDialogElement | null
     const video = dialog?.querySelector<HTMLVideoElement>('[data-demo-video]')
     const label = dialog?.querySelector<HTMLElement>('[data-demo-title]')
@@ -480,6 +483,7 @@ const compareRows = [
         if (label) label.textContent = button.dataset.demoTitle ?? defaults.title
         dialog.showModal()
         void video.play().catch(() => {})
+        track('demo-play', { clip: button.dataset.demoClip ?? 'walkthrough' })
       })
     })
     dialog?.querySelector('[data-demo-close]')?.addEventListener('click', () => dialog.close())

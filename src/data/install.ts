@@ -2,10 +2,25 @@ import { LATEST_RELEASE_URL, RELEASES_URL, SITE } from '../lib/site'
 
 export type Brand = 'apple' | 'archlinux' | 'ubuntu' | 'linux' | 'windows' | 'source'
 
+// The install-copy analytics event reports which of these a copied command
+// belongs to, so one channel counts the same on the home page and /install/.
+export type InstallMethod =
+  | 'homebrew'
+  | 'macos-tarball'
+  | 'aur'
+  | 'deb'
+  | 'linux-tarball'
+  | 'windows-zip'
+  | 'source'
+  | 'update-homebrew'
+  | 'update-aur'
+  | 'verify'
+
 export type InstallTab = {
   id: 'mac' | 'arch' | 'deb' | 'win' | 'build'
   label: string
   brand: Exclude<Brand, 'linux'>
+  method: InstallMethod
   html: string
 }
 
@@ -21,6 +36,7 @@ export const INSTALL_TABS: InstallTab[] = [
     id: 'mac',
     label: 'macOS',
     brand: 'apple',
+    method: 'homebrew',
     html: `${P}brew tap sametkum/klustr
 ${P}brew install klustr`,
   },
@@ -28,12 +44,14 @@ ${P}brew install klustr`,
     id: 'arch',
     label: 'Arch',
     brand: 'archlinux',
+    method: 'aur',
     html: `${P}paru -S klustr-bin   ${C('# or: yay -S klustr-bin')}`,
   },
   {
     id: 'deb',
     label: 'Debian / Ubuntu',
     brand: 'ubuntu',
+    method: 'deb',
     html: `${P}V=$(curl -fsSL https://api.github.com/repos/${SITE.repo}/releases/latest \\
     | grep -oP '"tag_name":\\s*"\\K[^"]+')
 ${P}curl -LO https://github.com/${SITE.repo}/releases/download/$V/klustr_\${V#v}_amd64.deb
@@ -43,6 +61,7 @@ ${P}sudo apt install ./klustr_\${V#v}_amd64.deb`,
     id: 'win',
     label: 'Windows',
     brand: 'windows',
+    method: 'windows-zip',
     html: `${PS}$V = (Invoke-RestMethod https://api.github.com/repos/${SITE.repo}/releases/latest).tag_name
 ${PS}Invoke-WebRequest "https://github.com/${SITE.repo}/releases/download/$V/klustr-$V-windows-amd64.zip" -OutFile klustr.zip
 ${PS}Expand-Archive klustr.zip "$env:LOCALAPPDATA\\Programs\\Klustr" -Force
@@ -52,6 +71,7 @@ ${PS}&amp; "$env:LOCALAPPDATA\\Programs\\Klustr\\klustr.exe"`,
     id: 'build',
     label: 'Build',
     brand: 'source',
+    method: 'source',
     html: `${P}mise install   ${C('# Go, Node, Wails CLI')}
 ${P}wails dev`,
   },
@@ -86,7 +106,9 @@ ${P}gh attestation verify klustr-$V-linux-amd64.tar.gz --repo ${SITE.repo}`
 
 // The install page and its markdown version both render from the copy below,
 // so a step changed here changes both. Prose fields are inline markdown.
-export type InstallStep = { label: string } | { lead: string } | { command: string } | { note: string }
+export type InstallCommand = { command: string; method: InstallMethod }
+
+export type InstallStep = { label: string } | { lead: string } | InstallCommand | { note: string }
 
 export type InstallPlatform = {
   id: string
@@ -97,7 +119,10 @@ export type InstallPlatform = {
   steps: InstallStep[]
 }
 
-const tab = (id: InstallTab['id']) => INSTALL_TABS.find((t) => t.id === id)!.html
+const tabStep = (id: InstallTab['id']): InstallCommand => {
+  const t = INSTALL_TABS.find((t) => t.id === id)!
+  return { command: t.html, method: t.method }
+}
 
 export const INSTALL_PAGE = {
   title: 'Install Klustr on macOS, Linux and Windows',
@@ -116,11 +141,11 @@ export const INSTALL_PLATFORMS: InstallPlatform[] = [
     summary: 'Apple Silicon. Signed with a Developer ID certificate and notarized by Apple.',
     steps: [
       { label: 'Homebrew' },
-      { command: tab('mac') },
+      tabStep('mac'),
       { note: 'After the initial tap, `brew search klustr` and `brew info klustr` find it like any other formula.' },
       { label: 'Manual' },
       { lead: `Download the darwin-arm64 tarball from the [latest release](${LATEST_RELEASE_URL}), then:` },
-      { command: MAC_MANUAL },
+      { command: MAC_MANUAL, method: 'macos-tarball' },
       { note: 'Gatekeeper opens the notarized bundle directly, even offline.' },
     ],
   },
@@ -131,7 +156,7 @@ export const INSTALL_PLATFORMS: InstallPlatform[] = [
     iconSize: '1.2rem',
     summary: 'AUR package klustr-bin, bumped automatically on every release.',
     steps: [
-      { command: ARCH_HELPERS },
+      { command: ARCH_HELPERS, method: 'aur' },
       { note: 'The PKGBUILD uses the prebuilt release tarball, so the install completes in seconds.' },
     ],
   },
@@ -142,7 +167,7 @@ export const INSTALL_PLATFORMS: InstallPlatform[] = [
     iconSize: '1.2rem',
     summary: 'amd64 .deb attached to every release.',
     steps: [
-      { command: tab('deb') },
+      tabStep('deb'),
       {
         note: 'The package pulls in webkit2gtk-4.1 and gtk-3 automatically and registers a desktop entry. Run the three commands one at a time; the first one resolves the latest tag.',
       },
@@ -156,7 +181,7 @@ export const INSTALL_PLATFORMS: InstallPlatform[] = [
     summary: 'amd64, for any distribution that ships the runtime libraries.',
     steps: [
       { lead: `Download the linux-amd64 tarball from the [latest release](${LATEST_RELEASE_URL}), then:` },
-      { command: LINUX_TARBALL },
+      { command: LINUX_TARBALL, method: 'linux-tarball' },
     ],
   },
   {
@@ -166,7 +191,7 @@ export const INSTALL_PLATFORMS: InstallPlatform[] = [
     iconSize: '1.2rem',
     summary: 'amd64 zip, tested on Windows 11. Not code-signed yet.',
     steps: [
-      { command: tab('win') },
+      tabStep('win'),
       {
         note: 'Run the commands one at a time in PowerShell; the first one resolves the latest tag. Klustr renders through the WebView2 runtime that ships with Windows 11.',
       },
@@ -181,7 +206,7 @@ export const INSTALL_PLATFORMS: InstallPlatform[] = [
     brand: 'source',
     iconSize: '1.1rem',
     summary: 'mise pins Go, Node and the Wails CLI; one command installs all three.',
-    steps: [{ command: BUILD_RELEASE }],
+    steps: [{ command: BUILD_RELEASE, method: 'source' }],
   },
 ]
 
@@ -190,11 +215,11 @@ export const INSTALL_UPDATE = {
   title: 'Updating',
   intro: 'Klustr checks GitHub Releases for a newer version and tells you when one exists; it never replaces itself.',
   channels: [
-    { label: 'Homebrew', command: BREW_UPGRADE },
-    { label: 'AUR', command: AUR_UPGRADE },
+    { label: 'Homebrew', command: BREW_UPGRADE, method: 'update-homebrew' },
+    { label: 'AUR', command: AUR_UPGRADE, method: 'update-aur' },
   ],
   note: 'The .deb, the tarballs and the Windows zip are replaced by downloading the new release.',
-}
+} satisfies { channels: (InstallCommand & { label: string })[] } & Record<string, unknown>
 
 export const INSTALL_VERIFY = {
   id: 'verify',
@@ -202,7 +227,8 @@ export const INSTALL_VERIFY = {
   intro:
     "Every release ships a SHA256SUMS file, and each asset carries build provenance that ties it to the commit and workflow run that produced it. Swap the asset name for the one you downloaded. On Windows, `Get-FileHash` prints the SHA-256 to compare with the zip's line in SHA256SUMS.",
   command: VERIFY_DOWNLOAD,
-}
+  method: 'verify',
+} satisfies InstallCommand & Record<string, unknown>
 
 export const INSTALL_REQUIREMENTS = {
   id: 'requirements',
