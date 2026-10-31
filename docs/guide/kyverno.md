@@ -28,14 +28,31 @@ the policy runs on admission, and:
 - Whether Kyverno generated a ValidatingAdmissionPolicy for the policy, or why not.
 - Kyverno's `PolicyViolation` events for the policy on the **Events** tab.
 
-## ValidatingPolicies
+## CEL policies
 
-Kyverno's CEL policies (`policies.kyverno.io`) appear as **ValidatingPolicies** and
-**Namespaced ValidatingPolicies**: their actions (Deny, Audit, Warn), the resources
-they match, namespace and object selectors, match conditions, variables, each
-validation's CEL expression and message, and their conditions. The other CEL kinds
-(mutating, generating, deleting and image-validating policies) stay in the generic
-[Custom Resources](custom-resources.md) browser for now.
+Each of Kyverno's CEL policy kinds (`policies.kyverno.io`) has its own entry, next
+to its namespaced variant (**Namespaced ValidatingPolicies**, **Namespaced
+MutatingPolicies** and so on). Every detail shows the resources the policy matches,
+namespace and object selectors, match conditions, variables and the policy's
+conditions. The views apply the controller's defaults, so a field the policy leaves
+out reads the way Kyverno treats it.
+
+- **ValidatingPolicies** — their actions (Deny, Audit, Warn) and each validation's
+  CEL expression and message. A policy without `validationActions` is **Deny**.
+- **ImageValidatingPolicies** — the images they match and the image extractors,
+  the attestors they trust (cosign keys, keyless identities and certificates, or
+  Notary) and the attestations they check, whether a signature is
+  required, digest handling, registry credentials and the failure policy.
+- **MutatingPolicies** — each mutation with its patch type and expression, the
+  target resources and conditions, whether they mutate existing resources in the
+  background as well as on admission, and the reinvocation policy.
+- **GeneratingPolicies** — the triggers and what each one generates, whether the
+  generated objects are kept in sync, and whether existing triggers are processed
+  too. **On policy delete** says whether the generated objects stay: Kyverno keeps
+  them unless the policy synchronizes.
+- **DeletingPolicies** — the schedule with the last and next run, the conditions
+  under which matched resources are deleted, and the deletion propagation. The
+  next run comes from Kyverno's own cron parser, in UTC.
 
 ## PolicyExceptions
 
@@ -55,7 +72,7 @@ Two links connect policies and resources:
 
 - **Violations** — when the cluster has the report CRDs, every policy's detail has
   a tab listing the resources it fails or warns on, across all reports. Each row
-  opens the resource.
+  opens the resource. DeletingPolicies have no such tab.
 - **Policy** — when Kyverno keeps a report for a built-in resource, that resource's
   detail gets a **Policy** tab, with the number of failing results on the tab
   itself. Resources without a report show no such tab. Kyverno names each report
