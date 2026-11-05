@@ -28,6 +28,17 @@ const P = '<span class="prompt">$ </span>'
 const PS = '<span class="prompt">PS&gt; </span>'
 const C = (text: string) => `<span class="comment">${text}</span>`
 
+const SOURCE_SETUP = `${P}git clone https://github.com/${SITE.repo}.git
+${P}cd klustr
+${P}mise install
+${P}npm --prefix frontend ci`
+
+export const FROM_SOURCE = `${SOURCE_SETUP}
+${P}wails3 dev`
+
+export const BUILD_RELEASE = `${SOURCE_SETUP}
+${P}wails3 task build`
+
 // Each command block is HTML for a `pre.cmd`: a prompt span starts a copyable
 // command, a comment span is a free note, and a trailing backslash continues
 // the command on the next line. CommandBlock splits it into per-command rows.
@@ -72,8 +83,7 @@ ${PS}&amp; "$env:LOCALAPPDATA\\Programs\\Klustr\\klustr.exe"`,
     label: 'Build',
     brand: 'source',
     method: 'source',
-    html: `${P}mise install   ${C('# Go, Node, Wails CLI')}
-${P}wails dev`,
+    html: FROM_SOURCE,
   },
 ]
 
@@ -87,12 +97,6 @@ ${P}yay -S klustr-bin`
 
 export const LINUX_TARBALL = `${P}tar -xzf klustr-*-linux-amd64.tar.gz
 ${P}install -Dm755 klustr ~/.local/bin/klustr`
-
-export const FROM_SOURCE = `${P}mise install
-${P}wails dev`
-
-export const BUILD_RELEASE = `${P}mise install
-${P}wails build -trimpath -clean`
 
 export const BREW_UPGRADE = `${P}brew upgrade klustr`
 
@@ -205,8 +209,16 @@ export const INSTALL_PLATFORMS: InstallPlatform[] = [
     title: 'Build from source',
     brand: 'source',
     iconSize: '1.1rem',
-    summary: 'mise pins Go, Node and the Wails CLI; one command installs all three.',
-    steps: [{ command: BUILD_RELEASE, method: 'source' }],
+    summary: 'mise pins Go, Node and the Wails v3 CLI.',
+    steps: [
+      {
+        lead: 'Install Git and [mise](https://mise.jdx.dev/) first. On Linux, install the GTK3 and WebKit2GTK 4.1 development headers before running mise (`libgtk-3-dev libwebkit2gtk-4.1-dev` on Debian and Ubuntu).',
+      },
+      { command: BUILD_RELEASE, method: 'source' },
+      {
+        note: 'The release build for your host platform is written to `build/bin/`. For development with Vite hot reload, run `wails3 dev` after the same setup instead.',
+      },
+    ],
   },
 ]
 
