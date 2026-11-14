@@ -2,8 +2,10 @@
 <!--
   Source template for public/og.png (1200×630 social card, rendered at 2× so
   the app screenshot stays legible). Regenerate after changing it, from the
-  repository root (the wait lets the Google Fonts load):
-    bunx playwright screenshot --device="Desktop Chrome HiDPI" --viewport-size=1200,630 --wait-for-timeout=2000 og-template.html public/og.png
+  repository root (the wait lets the Google Fonts load). Playwright is pinned
+  because each release needs its own browser build; download it once with
+  `bunx playwright@1.63.0 install chromium`.
+    bunx playwright@1.63.0 screenshot --device="Desktop Chrome HiDPI" --viewport-size=1200,630 --wait-for-timeout=2000 og-template.html public/og.png
   Keep the headline in sync with the landing hero and the chips in sync with
   the integrations.
 -->
